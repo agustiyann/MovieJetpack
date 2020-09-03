@@ -93,7 +93,7 @@ object DummyData {
                 "Glass",
                 "January 16, 2019",
                 "In a series of escalating encounters, former security guard David Dunn uses his supernatural abilities to track Kevin Wendell Crumb, a disturbed man who has twenty-four personalities. Meanwhile, the shadowy presence of Elijah Price emerges as an orchestrator who holds secrets critical to both men.",
-                R.drawable.poster_crimes,
+                R.drawable.poster_glass,
                 "https://youtu.be/95ghQs5AmNk"
             )
         )
