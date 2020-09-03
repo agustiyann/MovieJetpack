@@ -1,4 +1,10 @@
 package com.masscode.moviejetpack.data
 
-class TvShow {
-}
+data class TvShow(
+    val id: Int,
+    val name: String,
+    val firstAirDate: String,
+    val overview: String,
+    val posterPath: Int,
+    val trailer: String
+)
