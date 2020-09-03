@@ -9,11 +9,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setSupportActionBar(mainToolbar)
+        supportActionBar?.elevation = 0f
 
         val sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager)
         view_pager.adapter = sectionsPagerAdapter
         tabs.setupWithViewPager(view_pager)
-
-        supportActionBar?.elevation = 0f
     }
 }

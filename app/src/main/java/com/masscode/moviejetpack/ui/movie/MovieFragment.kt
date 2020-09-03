@@ -1,5 +1,6 @@
 package com.masscode.moviejetpack.ui.movie
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.masscode.moviejetpack.databinding.FragmentMovieBinding
+import com.masscode.moviejetpack.ui.detail.DetailActivity
 
 class MovieFragment : Fragment() {
 
@@ -22,8 +24,8 @@ class MovieFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(MovieViewModel::class.java)
         binding.lifecycleOwner = viewLifecycleOwner
 
-        val movieAdapter = MovieAdapter {id, type -> showDetail(id, type)}
-        val movies =  viewModel.getMovieList()
+        val movieAdapter = MovieAdapter { id, type -> showDetail(id, type) }
+        val movies = viewModel.getMovieList()
 
         movieAdapter.submitList(movies)
         binding.rvMovies.adapter = movieAdapter
@@ -32,7 +34,11 @@ class MovieFragment : Fragment() {
     }
 
     private fun showDetail(id: Int?, type: String?) {
-
+        val intent = Intent(context, DetailActivity::class.java).apply {
+            putExtra(DetailActivity.ID, id)
+            putExtra(DetailActivity.TYPE, type)
+        }
+        startActivity(intent)
     }
 
 }
