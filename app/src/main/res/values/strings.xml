@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">MovieJetpack</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="movies">Movies</string>
+    <string name="tv_shows">TV Shows</string>
+    <string name="title">Title</string>
+    <string name="date">Aug, 21 2020</string>
+    <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid animi assumenda aut autem commodi consectetur deserunt dolores doloribus enim eos, et excepturi facere hic id itaque maiores molestias nihil nulla porro possimus praesentium quae quisquam quo recusandae repellendus sequi tempora tenetur ullam voluptates voluptatum! Culpa doloremque fuga porro sapiente voluptates.</string>
 </resources>
