@@ -12,6 +12,7 @@ import com.masscode.moviejetpack.ui.detail.DetailActivity
 
 class MovieFragment : Fragment() {
 
+    private lateinit var binding: FragmentMovieBinding
     private lateinit var viewModel: MovieViewModel
 
     override fun onCreateView(
@@ -19,9 +20,14 @@ class MovieFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val binding = FragmentMovieBinding.inflate(inflater)
-
+        binding = FragmentMovieBinding.inflate(inflater)
         viewModel = ViewModelProvider(this).get(MovieViewModel::class.java)
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         binding.lifecycleOwner = viewLifecycleOwner
 
         val movieAdapter = MovieAdapter { id, type -> showDetail(id, type) }
@@ -29,8 +35,6 @@ class MovieFragment : Fragment() {
 
         movieAdapter.submitList(movies)
         binding.rvMovies.adapter = movieAdapter
-
-        return binding.root
     }
 
     private fun showDetail(id: Int?, type: String?) {

@@ -12,6 +12,7 @@ import com.masscode.moviejetpack.ui.detail.DetailActivity
 
 class TvShowFragment : Fragment() {
 
+    private lateinit var binding: FragmentTvShowBinding
     private lateinit var viewModel: TvShowViewModel
 
     override fun onCreateView(
@@ -19,9 +20,14 @@ class TvShowFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val binding = FragmentTvShowBinding.inflate(inflater)
-
+        binding = FragmentTvShowBinding.inflate(inflater)
         viewModel = ViewModelProvider(this).get(TvShowViewModel::class.java)
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         binding.lifecycleOwner = viewLifecycleOwner
 
         val movieAdapter = TvShowAdapter { id, type -> showDetail(id, type) }
@@ -29,8 +35,6 @@ class TvShowFragment : Fragment() {
 
         movieAdapter.submitList(movies)
         binding.rvTvShow.adapter = movieAdapter
-
-        return binding.root
     }
 
     private fun showDetail(id: Int?, type: String?) {
