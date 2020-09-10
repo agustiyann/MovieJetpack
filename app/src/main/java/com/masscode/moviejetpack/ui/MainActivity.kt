@@ -1,7 +1,8 @@
-package com.masscode.moviejetpack
+package com.masscode.moviejetpack.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.masscode.moviejetpack.R
 import com.masscode.moviejetpack.utils.SectionsPagerAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 

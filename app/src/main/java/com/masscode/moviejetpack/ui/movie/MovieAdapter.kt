@@ -7,21 +7,22 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.masscode.moviejetpack.R
-import com.masscode.moviejetpack.data.Movie
+import com.masscode.moviejetpack.data.source.local.entity.Movie
+import com.masscode.moviejetpack.data.source.remote.response.Movies
 import com.masscode.moviejetpack.databinding.ItemMovieListBinding
 
-class MovieAdapter(private val showDetail: (Int?, String?) -> Unit) :
-    ListAdapter<Movie, MovieAdapter.MovieViewHolder>(DiffCallback) {
+class MovieAdapter(private val showDetail: (Movies, String?) -> Unit) :
+    ListAdapter<Movies, MovieAdapter.MovieViewHolder>(DiffCallback) {
 
     inner class MovieViewHolder(private var binding: ItemMovieListBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(movie: Movie?) {
+        fun bind(movie: Movies) {
             binding.movie = movie
             binding.executePendingBindings()
 
             with(binding.root) {
                 setOnClickListener {
-                    showDetail(movie?.id, "movie")
+                    showDetail(movie, "movie")
                 }
             }
         }
@@ -42,12 +43,12 @@ class MovieAdapter(private val showDetail: (Int?, String?) -> Unit) :
         holder.bind(currentItem)
     }
 
-    companion object DiffCallback : DiffUtil.ItemCallback<Movie>() {
-        override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+    companion object DiffCallback : DiffUtil.ItemCallback<Movies>() {
+        override fun areItemsTheSame(oldItem: Movies, newItem: Movies): Boolean {
             return oldItem === newItem
         }
 
-        override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+        override fun areContentsTheSame(oldItem: Movies, newItem: Movies): Boolean {
             return oldItem.id == newItem.id
         }
 

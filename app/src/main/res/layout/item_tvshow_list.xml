@@ -7,7 +7,7 @@
 
         <variable
             name="tvShow"
-            type="com.masscode.moviejetpack.data.TvShow" />
+            type="com.masscode.moviejetpack.data.source.local.entity.TvShow" />
 
     </data>
 

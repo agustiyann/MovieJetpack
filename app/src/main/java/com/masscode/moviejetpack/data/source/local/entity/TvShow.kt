@@ -1,4 +1,4 @@
-package com.masscode.moviejetpack.data
+package com.masscode.moviejetpack.data.source.local.entity
 
 data class TvShow(
     val id: Int,

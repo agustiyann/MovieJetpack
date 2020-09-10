@@ -7,6 +7,7 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.rule.ActivityTestRule
+import com.masscode.moviejetpack.ui.MainActivity
 import com.masscode.moviejetpack.utils.DummyData
 import org.junit.Rule
 import org.junit.Test

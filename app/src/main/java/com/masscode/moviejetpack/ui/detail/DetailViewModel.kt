@@ -1,8 +1,9 @@
 package com.masscode.moviejetpack.ui.detail
 
 import androidx.lifecycle.ViewModel
-import com.masscode.moviejetpack.data.Movie
-import com.masscode.moviejetpack.data.TvShow
+import com.masscode.moviejetpack.data.source.local.entity.Movie
+import com.masscode.moviejetpack.data.source.local.entity.TvShow
+import com.masscode.moviejetpack.data.source.remote.response.Movies
 import com.masscode.moviejetpack.utils.DummyData
 import kotlin.properties.Delegates
 
@@ -15,8 +16,8 @@ class DetailViewModel : ViewModel() {
         this.id = itemId
     }
 
-    fun getDetailMovie(): Movie {
-        lateinit var movie: Movie
+    fun getDetailMovie(): Movies {
+        lateinit var movie: Movies
         val movieEntities = DummyData.generateMovieList()
         for (movieEntity in movieEntities) {
             if (movieEntity.id == id) {

@@ -17,17 +17,16 @@ fun showImage(imgView: ImageView, url: Int) {
         .into(imgView)
 }
 
+@BindingAdapter("showImageFromNetwork")
+fun showImageFromNetwork(imgView: ImageView, url: String) {
+    Glide.with(imgView.context).load("https://image.tmdb.org/t/p/w342$url")
+        .apply(RequestOptions.placeholderOf(R.color.colorAccent).error(R.color.colorAccent))
+        .into(imgView)
+}
+
 @BindingAdapter("showBlurImage")
 fun showBlurImage(imgView: ImageView, url: Int) {
     Glide.with(imgView.context).load(url)
         .apply(RequestOptions.bitmapTransform(BlurTransformation(10, 1)))
         .into(imgView)
-}
-
-@BindingAdapter("watchTrailer")
-fun watchTrailer(button: Button, url: String) {
-    button.setOnClickListener {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-        button.context.startActivity(intent)
-    }
 }

@@ -30,7 +30,6 @@ class DetailViewModelTest {
         assertEquals(movieDummy.releaseDate, movieData.releaseDate)
         assertEquals(movieDummy.overview, movieData.overview)
         assertEquals(movieDummy.posterPath, movieData.posterPath)
-        assertEquals(movieDummy.trailer, movieData.trailer)
     }
 
     @Test

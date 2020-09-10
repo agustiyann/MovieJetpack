@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.masscode.moviejetpack.R
-import com.masscode.moviejetpack.data.TvShow
+import com.masscode.moviejetpack.data.source.local.entity.TvShow
 import com.masscode.moviejetpack.databinding.ItemTvshowListBinding
 
 class TvShowAdapter(private val showDetail: (Int?, String?) -> Unit) :

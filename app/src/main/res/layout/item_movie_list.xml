@@ -7,7 +7,7 @@
 
         <variable
             name="movie"
-            type="com.masscode.moviejetpack.data.Movie" />
+            type="com.masscode.moviejetpack.data.source.remote.response.Movies" />
 
     </data>
 
@@ -30,7 +30,7 @@
 
             <ImageView
                 android:id="@+id/img_poster"
-                showImage="@{movie.posterPath}"
+                showImageFromNetwork="@{movie.posterPath}"
                 android:layout_width="100dp"
                 android:layout_height="150dp"
                 android:layout_alignParentStart="true"
