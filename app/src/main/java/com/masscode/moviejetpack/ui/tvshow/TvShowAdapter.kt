@@ -15,13 +15,13 @@ class TvShowAdapter(private val showDetail: (Int?, String?) -> Unit) :
 
     inner class TvViewHolder(private var binding: ItemTvshowListBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(tvShows: TvShow?) {
+        fun bind(tvShows: TvShow) {
             binding.tvShow = tvShows
             binding.executePendingBindings()
 
             with(binding.root) {
                 setOnClickListener {
-                    showDetail(tvShows?.id, "tv show")
+                    showDetail(tvShows.id, "tv show")
                 }
             }
         }

@@ -2,11 +2,11 @@ package com.masscode.moviejetpack.ui.movie
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.masscode.moviejetpack.data.MovieRespository
-import com.masscode.moviejetpack.data.source.remote.response.Movies
+import com.masscode.moviejetpack.data.Repository
+import com.masscode.moviejetpack.data.source.local.entity.Movie
 
-class MovieViewModel(private val movieRespository: MovieRespository) : ViewModel() {
+class MovieViewModel(private val movieRepository: Repository) : ViewModel() {
 
-    fun getMovieList(): LiveData<List<Movies>> = movieRespository.getMovies()
+    fun getMovieList(): LiveData<List<Movie>> = movieRepository.getMovies()
 
 }

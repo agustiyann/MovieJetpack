@@ -2,11 +2,13 @@ package com.masscode.moviejetpack.ui.movie
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.masscode.moviejetpack.data.MovieRespository
+import com.masscode.moviejetpack.data.Repository
 import com.masscode.moviejetpack.di.Injection
+import com.masscode.moviejetpack.ui.detail.DetailViewModel
+import com.masscode.moviejetpack.ui.tvshow.TvShowViewModel
 
-@Suppress("UNCHECKED_CAST")
-class MovieViewModelFactory private constructor(private val mMovieRepository: MovieRespository): ViewModelProvider.NewInstanceFactory() {
+class MovieViewModelFactory private constructor(private val mMovieRepository: Repository) :
+    ViewModelProvider.NewInstanceFactory() {
 
     companion object {
         @Volatile
@@ -20,7 +22,19 @@ class MovieViewModelFactory private constructor(private val mMovieRepository: Mo
             }
     }
 
+    @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return MovieViewModel(mMovieRepository) as T
+        return when {
+            modelClass.isAssignableFrom(MovieViewModel::class.java) -> {
+                MovieViewModel(mMovieRepository) as T
+            }
+            modelClass.isAssignableFrom(TvShowViewModel::class.java) -> {
+                TvShowViewModel(mMovieRepository) as T
+            }
+            modelClass.isAssignableFrom(DetailViewModel::class.java) -> {
+                DetailViewModel(mMovieRepository) as T
+            }
+            else -> throw Throwable("Unknown ViewModel class: " + modelClass.name)
+        }
     }
 }

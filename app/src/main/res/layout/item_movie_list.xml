@@ -7,7 +7,7 @@
 
         <variable
             name="movie"
-            type="com.masscode.moviejetpack.data.source.remote.response.Movies" />
+            type="com.masscode.moviejetpack.data.source.local.entity.Movie" />
 
     </data>
 

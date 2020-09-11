@@ -7,8 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.masscode.moviejetpack.data.source.local.entity.TvShow
 import com.masscode.moviejetpack.databinding.FragmentTvShowBinding
 import com.masscode.moviejetpack.ui.detail.DetailActivity
+import com.masscode.moviejetpack.ui.movie.MovieViewModelFactory
 
 class TvShowFragment : Fragment() {
 
@@ -21,7 +23,8 @@ class TvShowFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentTvShowBinding.inflate(inflater)
-        viewModel = ViewModelProvider(this).get(TvShowViewModel::class.java)
+        val viewModelFactory = MovieViewModelFactory.getInstance()
+        viewModel = ViewModelProvider(this, viewModelFactory).get(TvShowViewModel::class.java)
 
         return binding.root
     }
@@ -30,14 +33,15 @@ class TvShowFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.lifecycleOwner = viewLifecycleOwner
 
-        val movieAdapter = TvShowAdapter { id, type -> showDetail(id, type) }
-        val movies = viewModel.getTvShowList()
+        val movieAdapter = TvShowAdapter { id, type -> showDetail(id!!, type) }
+        viewModel.getTvShowList().observe(viewLifecycleOwner, { movies ->
+            movieAdapter.submitList(movies)
+        })
 
-        movieAdapter.submitList(movies)
         binding.rvTvShow.adapter = movieAdapter
     }
 
-    private fun showDetail(id: Int?, type: String?) {
+    private fun showDetail(id: Int, type: String?) {
         val intent = Intent(context, DetailActivity::class.java).apply {
             putExtra(DetailActivity.ID, id)
             putExtra(DetailActivity.TYPE, type)

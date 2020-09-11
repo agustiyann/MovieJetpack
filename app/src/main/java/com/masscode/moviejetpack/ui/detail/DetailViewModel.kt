@@ -1,42 +1,30 @@
 package com.masscode.moviejetpack.ui.detail
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.masscode.moviejetpack.data.source.local.entity.Movie
+import com.masscode.moviejetpack.data.Repository
 import com.masscode.moviejetpack.data.source.local.entity.TvShow
-import com.masscode.moviejetpack.data.source.remote.response.Movies
-import com.masscode.moviejetpack.utils.DummyData
+import com.masscode.moviejetpack.data.source.local.entity.Movie
 import kotlin.properties.Delegates
 
-class DetailViewModel : ViewModel() {
+class DetailViewModel(private val repository: Repository) : ViewModel() {
 
-    private var id by Delegates.notNull<Int>()
+    private var movieId by Delegates.notNull<Int>()
+    private var tvShowId by Delegates.notNull<Int>()
     var isMovie = false
 
-    fun setSelectedItem(itemId: Int) {
-        this.id = itemId
+    fun setSelectedMovie(id: Int) {
+        this.movieId = id
     }
 
-    fun getDetailMovie(): Movies {
-        lateinit var movie: Movies
-        val movieEntities = DummyData.generateMovieList()
-        for (movieEntity in movieEntities) {
-            if (movieEntity.id == id) {
-                movie = movieEntity
-            }
-        }
+    fun setSelectedTvShow(id: Int) {
+        this.tvShowId = id
+    }
+
+    fun getDetailMovie(): LiveData<Movie> {
         isMovie = true
-        return movie
+        return repository.getMovieById(movieId)
     }
 
-    fun getDetailTvShow(): TvShow {
-        lateinit var tvShow: TvShow
-        val tvShowEntities = DummyData.generateTvShowList()
-        for (tvShowEntity in tvShowEntities) {
-            if (tvShowEntity.id == id) {
-                tvShow = tvShowEntity
-            }
-        }
-        return tvShow
-    }
-
+    fun getDetailTvShow(): LiveData<TvShow> = repository.getTvShowById(tvShowId)
 }

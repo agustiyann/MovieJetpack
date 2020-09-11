@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.masscode.moviejetpack.data.source.remote.response.Movies
 import com.masscode.moviejetpack.databinding.FragmentMovieBinding
 import com.masscode.moviejetpack.ui.detail.DetailActivity
 
@@ -15,7 +14,6 @@ class MovieFragment : Fragment() {
 
     private lateinit var binding: FragmentMovieBinding
     private lateinit var viewModel: MovieViewModel
-    private lateinit var viewModelFactory: MovieViewModelFactory
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -23,7 +21,7 @@ class MovieFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentMovieBinding.inflate(inflater)
-        viewModelFactory = MovieViewModelFactory.getInstance()
+        val viewModelFactory = MovieViewModelFactory.getInstance()
         viewModel = ViewModelProvider(this, viewModelFactory).get(MovieViewModel::class.java)
 
         return binding.root
@@ -33,7 +31,7 @@ class MovieFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.lifecycleOwner = viewLifecycleOwner
 
-        val movieAdapter = MovieAdapter { id, type -> showDetail(id, type) }
+        val movieAdapter = MovieAdapter { id, type -> showDetail(id!!, type) }
         viewModel.getMovieList().observe(viewLifecycleOwner, { movies ->
             movieAdapter.submitList(movies)
             movieAdapter.notifyDataSetChanged()
@@ -42,9 +40,9 @@ class MovieFragment : Fragment() {
         binding.rvMovies.adapter = movieAdapter
     }
 
-    private fun showDetail(movie: Movies, type: String?) {
+    private fun showDetail(id: Int, type: String?) {
         val intent = Intent(context, DetailActivity::class.java).apply {
-            putExtra(DetailActivity.ID, movie)
+            putExtra(DetailActivity.ID, id)
             putExtra(DetailActivity.TYPE, type)
         }
         startActivity(intent)

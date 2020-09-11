@@ -3,8 +3,8 @@ package com.masscode.moviejetpack.ui.movie
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.masscode.moviejetpack.data.MovieRespository
-import com.masscode.moviejetpack.data.source.remote.response.Movies
+import com.masscode.moviejetpack.data.Repository
+import com.masscode.moviejetpack.data.source.local.entity.Movie
 import com.masscode.moviejetpack.utils.DummyData
 import com.nhaarman.mockitokotlin2.verify
 import org.junit.Test
@@ -18,7 +18,7 @@ import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
-class MoviesViewModelTest {
+class MovieViewModelTest {
 
     private lateinit var viewModel: MovieViewModel
 
@@ -26,10 +26,10 @@ class MoviesViewModelTest {
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Mock
-    private lateinit var movieRepository: MovieRespository
+    private lateinit var movieRepository: Repository
 
     @Mock
-    private lateinit var observer: Observer<List<Movies>>
+    private lateinit var observer: Observer<List<Movie>>
 
     @Before
     fun setUp() {
@@ -39,7 +39,7 @@ class MoviesViewModelTest {
     @Test
     fun getMovieList() {
         val dummyMovies = DummyData.generateMovieList()
-        val movies = MutableLiveData<List<Movies>>()
+        val movies = MutableLiveData<List<Movie>>()
         movies.value = dummyMovies
 
         `when`(movieRepository.getMovies()).thenReturn(movies)

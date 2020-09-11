@@ -1,16 +1,16 @@
 package com.masscode.moviejetpack.di
 
-import com.masscode.moviejetpack.data.MovieRespository
+import com.masscode.moviejetpack.data.Repository
 import com.masscode.moviejetpack.data.source.remote.RemoteDataSource
 import com.masscode.moviejetpack.data.source.remote.network.TMDBApi
 
 object Injection {
 
-    fun provideRepository(): MovieRespository {
+    fun provideRepository(): Repository {
         val api = TMDBApi
 
         val remoteDataSource = RemoteDataSource.getInstance(api)
 
-        return MovieRespository.getInstance(remoteDataSource)
+        return Repository.getInstance(remoteDataSource)
     }
 }

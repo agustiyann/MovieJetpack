@@ -30,7 +30,7 @@
 
             <ImageView
                 android:id="@+id/img_poster"
-                showImage="@{tvShow.posterPath}"
+                showImageFromNetwork="@{tvShow.posterPath}"
                 android:layout_width="100dp"
                 android:layout_height="150dp"
                 android:layout_alignParentStart="true"
