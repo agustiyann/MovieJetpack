@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.masscode.moviejetpack.data.source.local.entity.TvShow
 import com.masscode.moviejetpack.databinding.FragmentTvShowBinding
 import com.masscode.moviejetpack.ui.detail.DetailActivity
 import com.masscode.moviejetpack.ui.movie.MovieViewModelFactory
@@ -34,7 +33,9 @@ class TvShowFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         val movieAdapter = TvShowAdapter { id, type -> showDetail(id!!, type) }
+        binding.progressBar.visibility = View.VISIBLE
         viewModel.getTvShowList().observe(viewLifecycleOwner, { movies ->
+            binding.progressBar.visibility = View.GONE
             movieAdapter.submitList(movies)
         })
 

@@ -1,24 +1,54 @@
 package com.masscode.moviejetpack.data
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.masscode.moviejetpack.data.source.local.entity.Movie
 import com.masscode.moviejetpack.data.source.local.entity.TvShow
 import com.masscode.moviejetpack.data.source.remote.RemoteDataSource
 
-class FakeRepository (private val remoteDataSource: RemoteDataSource) : DataSource {
+class FakeRepository(private val remoteDataSource: RemoteDataSource) : DataSource {
+
     override fun getMovies(): LiveData<List<Movie>> {
-        TODO("Not yet implemented")
+        val movieResult = MutableLiveData<List<Movie>>()
+        remoteDataSource.loadMovies(object : RemoteDataSource.LoadMovieCallback {
+            override fun onMovieReceived(movieList: List<Movie>) {
+                movieResult.postValue(movieList)
+            }
+        })
+
+        return movieResult
     }
 
     override fun getTvShow(): LiveData<List<TvShow>> {
-        TODO("Not yet implemented")
+        val tvResult = MutableLiveData<List<TvShow>>()
+        remoteDataSource.loadTvShows(object : RemoteDataSource.LoadTvShowCallback {
+            override fun onTvShowReceived(tvShowList: List<TvShow>) {
+                tvResult.postValue(tvShowList)
+            }
+        })
+
+        return tvResult
     }
 
     override fun getMovieById(movieId: Int): LiveData<Movie> {
-        TODO("Not yet implemented")
+        val mMovie = MutableLiveData<Movie>()
+        remoteDataSource.getMovieById(movieId, object : RemoteDataSource.LoadMovieDetailCallback {
+            override fun onDetailReceived(movie: Movie) {
+                mMovie.postValue(movie)
+            }
+        })
+
+        return mMovie
     }
 
     override fun getTvShowById(tvId: Int): LiveData<TvShow> {
-        TODO("Not yet implemented")
+        val mTvShow = MutableLiveData<TvShow>()
+        remoteDataSource.getTvShowById(tvId, object : RemoteDataSource.LoadTvShowDetailCallback {
+            override fun onDetailReceived(tvShow: TvShow) {
+                mTvShow.postValue(tvShow)
+            }
+        })
+
+        return mTvShow
     }
 }

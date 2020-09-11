@@ -1,13 +1,12 @@
 package com.masscode.moviejetpack.ui.detail
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.masscode.moviejetpack.R
-import com.masscode.moviejetpack.data.source.local.entity.TvShow
-import com.masscode.moviejetpack.data.source.local.entity.Movie
 import com.masscode.moviejetpack.databinding.ActivityDetailBinding
 import com.masscode.moviejetpack.ui.movie.MovieViewModelFactory
 
@@ -42,12 +41,16 @@ class DetailActivity : AppCompatActivity() {
 
             if (type == "movie") {
                 viewModel.setSelectedMovie(id)
+                binding.progressBar.visibility = View.VISIBLE
                 viewModel.getDetailMovie().observe(this, { movie ->
+                    binding.progressBar.visibility = View.GONE
                     binding.movie = movie
                 })
             } else {
                 viewModel.setSelectedTvShow(id)
+                binding.progressBar.visibility = View.VISIBLE
                 viewModel.getDetailTvShow().observe(this, { tvShow ->
+                    binding.progressBar.visibility = View.GONE
                     binding.tvShow = tvShow
                 })
             }

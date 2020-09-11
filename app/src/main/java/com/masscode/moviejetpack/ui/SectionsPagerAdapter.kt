@@ -1,4 +1,4 @@
-package com.masscode.moviejetpack.utils
+package com.masscode.moviejetpack.ui
 
 import android.content.Context
 import androidx.annotation.StringRes
