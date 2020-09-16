@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.masscode.moviejetpack.databinding.FragmentMovieBinding
 import com.masscode.moviejetpack.ui.detail.DetailActivity
+import com.masscode.moviejetpack.viewmodel.ViewModelFactory
 
 class MovieFragment : Fragment() {
 
@@ -21,7 +22,7 @@ class MovieFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentMovieBinding.inflate(inflater)
-        val viewModelFactory = MovieViewModelFactory.getInstance()
+        val viewModelFactory = ViewModelFactory.getInstance()
         viewModel = ViewModelProvider(this, viewModelFactory).get(MovieViewModel::class.java)
 
         return binding.root
@@ -36,7 +37,6 @@ class MovieFragment : Fragment() {
         viewModel.getMovieList().observe(viewLifecycleOwner, { movies ->
             binding.progressBar.visibility = View.GONE
             movieAdapter.submitList(movies)
-            movieAdapter.notifyDataSetChanged()
         })
 
         binding.rvMovies.adapter = movieAdapter

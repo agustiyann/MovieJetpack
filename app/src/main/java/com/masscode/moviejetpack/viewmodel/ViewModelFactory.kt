@@ -1,24 +1,25 @@
-package com.masscode.moviejetpack.ui.movie
+package com.masscode.moviejetpack.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.masscode.moviejetpack.data.Repository
 import com.masscode.moviejetpack.di.Injection
 import com.masscode.moviejetpack.ui.detail.DetailViewModel
+import com.masscode.moviejetpack.ui.movie.MovieViewModel
 import com.masscode.moviejetpack.ui.tvshow.TvShowViewModel
 
-class MovieViewModelFactory private constructor(private val mMovieRepository: Repository) :
+class ViewModelFactory private constructor(private val mMovieRepository: Repository) :
     ViewModelProvider.NewInstanceFactory() {
 
     companion object {
         @Volatile
-        private var instance: MovieViewModelFactory? = null
+        private var instance: ViewModelFactory? = null
 
         // kode synchronized untuk membuat semua thread tersinkronisasi. Dengan cara ini,
         // hanya satu thread yang boleh menjalankan fungsi yang sama di waktu yang sama.
-        fun getInstance(): MovieViewModelFactory =
+        fun getInstance(): ViewModelFactory =
             instance ?: synchronized(this) {
-                instance ?: MovieViewModelFactory(Injection.provideRepository())
+                instance ?: ViewModelFactory(Injection.provideRepository())
             }
     }
 

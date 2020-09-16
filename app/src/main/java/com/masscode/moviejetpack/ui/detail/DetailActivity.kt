@@ -8,7 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.masscode.moviejetpack.R
 import com.masscode.moviejetpack.databinding.ActivityDetailBinding
-import com.masscode.moviejetpack.ui.movie.MovieViewModelFactory
+import com.masscode.moviejetpack.viewmodel.ViewModelFactory
 
 class DetailActivity : AppCompatActivity() {
 
@@ -29,7 +29,7 @@ class DetailActivity : AppCompatActivity() {
         supportActionBar?.title = null
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val viewModelFactory = MovieViewModelFactory.getInstance()
+        val viewModelFactory = ViewModelFactory.getInstance()
         viewModel = ViewModelProvider(this, viewModelFactory).get(DetailViewModel::class.java)
 
         val extras = intent.extras

@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.masscode.moviejetpack.databinding.FragmentTvShowBinding
 import com.masscode.moviejetpack.ui.detail.DetailActivity
-import com.masscode.moviejetpack.ui.movie.MovieViewModelFactory
+import com.masscode.moviejetpack.viewmodel.ViewModelFactory
 
 class TvShowFragment : Fragment() {
 
@@ -22,7 +22,7 @@ class TvShowFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentTvShowBinding.inflate(inflater)
-        val viewModelFactory = MovieViewModelFactory.getInstance()
+        val viewModelFactory = ViewModelFactory.getInstance()
         viewModel = ViewModelProvider(this, viewModelFactory).get(TvShowViewModel::class.java)
 
         return binding.root
@@ -32,14 +32,14 @@ class TvShowFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.lifecycleOwner = viewLifecycleOwner
 
-        val movieAdapter = TvShowAdapter { id, type -> showDetail(id!!, type) }
+        val tvShowAdapter = TvShowAdapter { id, type -> showDetail(id!!, type) }
         binding.progressBar.visibility = View.VISIBLE
         viewModel.getTvShowList().observe(viewLifecycleOwner, { movies ->
             binding.progressBar.visibility = View.GONE
-            movieAdapter.submitList(movies)
+            tvShowAdapter.submitList(movies)
         })
 
-        binding.rvTvShow.adapter = movieAdapter
+        binding.rvTvShow.adapter = tvShowAdapter
     }
 
     private fun showDetail(id: Int, type: String?) {

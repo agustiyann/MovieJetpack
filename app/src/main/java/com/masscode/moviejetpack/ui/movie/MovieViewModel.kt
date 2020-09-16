@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModel
 import com.masscode.moviejetpack.data.Repository
 import com.masscode.moviejetpack.data.source.local.entity.Movie
 
-class MovieViewModel(private val movieRepository: Repository) : ViewModel() {
+class MovieViewModel(private val repository: Repository) : ViewModel() {
 
-    fun getMovieList(): LiveData<List<Movie>> = movieRepository.getMovies()
+    fun getMovieList(): LiveData<List<Movie>> = repository.getMovies()
 
 }
