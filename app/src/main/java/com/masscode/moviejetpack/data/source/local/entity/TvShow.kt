@@ -1,10 +1,12 @@
 package com.masscode.moviejetpack.data.source.local.entity
 
 import android.os.Parcelable
+import androidx.room.Entity
 import com.squareup.moshi.Json
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
+@Entity(tableName = "tv_entity")
 data class TvShow(
     val id: Int? = 0,
     val name: String? = "",
