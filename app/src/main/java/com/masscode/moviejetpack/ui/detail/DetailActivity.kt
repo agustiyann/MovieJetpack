@@ -1,7 +1,6 @@
 package com.masscode.moviejetpack.ui.detail
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -11,11 +10,6 @@ import com.masscode.moviejetpack.databinding.ActivityDetailBinding
 import com.masscode.moviejetpack.viewmodel.ViewModelFactory
 
 class DetailActivity : AppCompatActivity() {
-
-    companion object {
-        const val ID = "id"
-        const val TYPE = "type"
-    }
 
     private lateinit var viewModel: DetailViewModel
 
@@ -29,31 +23,25 @@ class DetailActivity : AppCompatActivity() {
         supportActionBar?.title = null
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val viewModelFactory = ViewModelFactory.getInstance()
+        val viewModelFactory = ViewModelFactory.getInstance(this)
         viewModel = ViewModelProvider(this, viewModelFactory).get(DetailViewModel::class.java)
 
-        val extras = intent.extras
+        val type = DetailActivityArgs.fromBundle(intent.extras!!).type
+        val movie = DetailActivityArgs.fromBundle(intent.extras!!).movie
+        val tvShow = DetailActivityArgs.fromBundle(intent.extras!!).tvShow
 
-        if (extras != null) {
-            val id = extras.getInt(ID)
-            val type = extras.getString(TYPE)
-            Log.d("type", "type: $type")
-
-            if (type == "movie") {
-                viewModel.setSelectedMovie(id)
-                binding.progressBar.visibility = View.VISIBLE
-                viewModel.getDetailMovie().observe(this, { movie ->
-                    binding.progressBar.visibility = View.GONE
-                    binding.movie = movie
-                })
-            } else {
-                viewModel.setSelectedTvShow(id)
-                binding.progressBar.visibility = View.VISIBLE
-                viewModel.getDetailTvShow().observe(this, { tvShow ->
-                    binding.progressBar.visibility = View.GONE
-                    binding.tvShow = tvShow
-                })
-            }
+        if (type == "movie") {
+            viewModel.setMovie(movie!!)
+            viewModel.movie.observe(this, { data ->
+                binding.progressBar.visibility = View.GONE
+                binding.movie = data
+            })
+        } else {
+            viewModel.setTvShow(tvShow!!)
+            viewModel.tvShow.observe(this, { data ->
+                binding.progressBar.visibility = View.GONE
+                binding.tvShow = data
+            })
         }
 
         binding.viewModel = viewModel

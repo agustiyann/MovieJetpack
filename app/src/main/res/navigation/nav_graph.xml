@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/movies">
+
+    <fragment
+        android:id="@+id/movies"
+        android:name="com.masscode.moviejetpack.ui.movie.MovieFragment"
+        android:label="MovieFragment"
+        tools:layout="@layout/fragment_movie" >
+        <action
+            android:id="@+id/action_movies_to_detailActivity"
+            app:destination="@id/detailActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/tv_show"
+        android:name="com.masscode.moviejetpack.ui.tvshow.TvShowFragment"
+        android:label="TvShowFragment"
+        tools:layout="@layout/fragment_tv_show" >
+        <action
+            android:id="@+id/action_tv_show_to_detailActivity"
+            app:destination="@id/detailActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/favorite"
+        android:name="com.masscode.moviejetpack.ui.favorite.FavoriteFragment"
+        android:label="FavoriteFragment"
+        tools:layout="@layout/fragment_favorite" />
+    <activity
+        android:id="@+id/detailActivity"
+        android:name="com.masscode.moviejetpack.ui.detail.DetailActivity"
+        android:label="DetailActivity" >
+        <argument
+            android:name="type"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="movie"
+            app:argType="com.masscode.moviejetpack.data.source.local.entity.Movie"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="tvShow"
+            app:argType="com.masscode.moviejetpack.data.source.local.entity.TvShow"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </activity>
+</navigation>

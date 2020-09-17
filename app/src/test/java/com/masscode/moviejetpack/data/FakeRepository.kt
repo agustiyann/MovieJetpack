@@ -2,11 +2,15 @@ package com.masscode.moviejetpack.data
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.masscode.moviejetpack.data.source.local.LocalDataSource
 import com.masscode.moviejetpack.data.source.local.entity.Movie
 import com.masscode.moviejetpack.data.source.local.entity.TvShow
 import com.masscode.moviejetpack.data.source.remote.RemoteDataSource
 
-class FakeRepository(private val remoteDataSource: RemoteDataSource) : DataSource {
+class FakeRepository(
+    private val remoteDataSource: RemoteDataSource,
+    private val localDataSource: LocalDataSource
+) : DataSource {
 
     override fun getMovies(): LiveData<List<Movie>> {
         val movieResult = MutableLiveData<List<Movie>>()
@@ -51,4 +55,8 @@ class FakeRepository(private val remoteDataSource: RemoteDataSource) : DataSourc
 
         return mTvShow
     }
+
+    override fun getMovieFavorite(): LiveData<List<Movie>> = localDataSource.getAllMovies()
+
+    override fun addMovieFavorite(movie: Movie) = localDataSource.insertMovie(movie)
 }

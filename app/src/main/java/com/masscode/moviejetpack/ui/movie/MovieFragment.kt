@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.masscode.moviejetpack.data.source.local.entity.Movie
 import com.masscode.moviejetpack.databinding.FragmentMovieBinding
 import com.masscode.moviejetpack.ui.detail.DetailActivity
 import com.masscode.moviejetpack.viewmodel.ViewModelFactory
@@ -22,7 +24,7 @@ class MovieFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentMovieBinding.inflate(inflater)
-        val viewModelFactory = ViewModelFactory.getInstance()
+        val viewModelFactory = ViewModelFactory.getInstance(requireContext())
         viewModel = ViewModelProvider(this, viewModelFactory).get(MovieViewModel::class.java)
 
         return binding.root
@@ -32,7 +34,7 @@ class MovieFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.lifecycleOwner = viewLifecycleOwner
 
-        val movieAdapter = MovieAdapter { id, type -> showDetail(id!!, type) }
+        val movieAdapter = MovieAdapter { movie, type -> showDetail(movie!!, type) }
         binding.progressBar.visibility = View.VISIBLE
         viewModel.getMovieList().observe(viewLifecycleOwner, { movies ->
             binding.progressBar.visibility = View.GONE
@@ -42,12 +44,13 @@ class MovieFragment : Fragment() {
         binding.rvMovies.adapter = movieAdapter
     }
 
-    private fun showDetail(id: Int, type: String?) {
-        val intent = Intent(context, DetailActivity::class.java).apply {
-            putExtra(DetailActivity.ID, id)
-            putExtra(DetailActivity.TYPE, type)
-        }
-        startActivity(intent)
+    private fun showDetail(movie: Movie, type: String?) {
+        findNavController().navigate(
+            MovieFragmentDirections.actionMoviesToDetailActivity(
+                type,
+                movie
+            )
+        )
     }
 
 }

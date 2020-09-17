@@ -2,20 +2,24 @@ package com.masscode.moviejetpack.data
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.masscode.moviejetpack.data.source.local.LocalDataSource
 import com.masscode.moviejetpack.data.source.local.entity.TvShow
 import com.masscode.moviejetpack.data.source.remote.RemoteDataSource
 import com.masscode.moviejetpack.data.source.local.entity.Movie
 
-class Repository private constructor(private val remoteDataSource: RemoteDataSource) :
+class Repository private constructor(
+    private val remoteDataSource: RemoteDataSource,
+    private val localDataSource: LocalDataSource
+) :
     DataSource {
 
     companion object {
         @Volatile
         private var instance: Repository? = null
 
-        fun getInstance(remoteData: RemoteDataSource): Repository =
+        fun getInstance(remoteData: RemoteDataSource, localData: LocalDataSource): Repository =
             instance ?: synchronized(this) {
-                instance ?: Repository(remoteData)
+                instance ?: Repository(remoteData, localData)
             }
     }
 
@@ -63,4 +67,10 @@ class Repository private constructor(private val remoteDataSource: RemoteDataSou
 
         return mTvShow
     }
+
+    override fun getMovieFavorite(): LiveData<List<Movie>> = localDataSource.getAllMovies()
+
+    override fun addMovieFavorite(movie: Movie) = localDataSource.insertMovie(movie)
+
+
 }

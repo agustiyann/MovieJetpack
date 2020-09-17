@@ -1,5 +1,6 @@
 package com.masscode.moviejetpack.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.masscode.moviejetpack.data.Repository
@@ -17,9 +18,9 @@ class ViewModelFactory private constructor(private val mMovieRepository: Reposit
 
         // kode synchronized untuk membuat semua thread tersinkronisasi. Dengan cara ini,
         // hanya satu thread yang boleh menjalankan fungsi yang sama di waktu yang sama.
-        fun getInstance(): ViewModelFactory =
+        fun getInstance(context: Context): ViewModelFactory =
             instance ?: synchronized(this) {
-                instance ?: ViewModelFactory(Injection.provideRepository())
+                instance ?: ViewModelFactory(Injection.provideRepository(context))
             }
     }
 

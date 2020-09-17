@@ -1,6 +1,7 @@
 package com.masscode.moviejetpack.data
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.masscode.moviejetpack.data.source.local.LocalDataSource
 import com.masscode.moviejetpack.data.source.remote.RemoteDataSource
 import com.masscode.moviejetpack.utils.DummyData
 import com.masscode.moviejetpack.utils.LiveDataTestUtil
@@ -19,7 +20,8 @@ class RepositoryTest {
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     private val remote = Mockito.mock(RemoteDataSource::class.java)
-    private val repository = FakeRepository(remote)
+    private val local = Mockito.mock(LocalDataSource::class.java)
+    private val repository = FakeRepository(remote, local)
 
     private val movieResponses = DummyData.generateMovieList()
     private val tvShowResponses = DummyData.generateTvShowList()

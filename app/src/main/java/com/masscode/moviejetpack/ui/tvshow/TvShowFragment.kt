@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.masscode.moviejetpack.data.source.local.entity.TvShow
 import com.masscode.moviejetpack.databinding.FragmentTvShowBinding
 import com.masscode.moviejetpack.ui.detail.DetailActivity
 import com.masscode.moviejetpack.viewmodel.ViewModelFactory
@@ -22,7 +24,7 @@ class TvShowFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentTvShowBinding.inflate(inflater)
-        val viewModelFactory = ViewModelFactory.getInstance()
+        val viewModelFactory = ViewModelFactory.getInstance(requireContext())
         viewModel = ViewModelProvider(this, viewModelFactory).get(TvShowViewModel::class.java)
 
         return binding.root
@@ -32,7 +34,7 @@ class TvShowFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.lifecycleOwner = viewLifecycleOwner
 
-        val tvShowAdapter = TvShowAdapter { id, type -> showDetail(id!!, type) }
+        val tvShowAdapter = TvShowAdapter { tvShow, type -> showDetail(tvShow!!, type) }
         binding.progressBar.visibility = View.VISIBLE
         viewModel.getTvShowList().observe(viewLifecycleOwner, { movies ->
             binding.progressBar.visibility = View.GONE
@@ -42,11 +44,12 @@ class TvShowFragment : Fragment() {
         binding.rvTvShow.adapter = tvShowAdapter
     }
 
-    private fun showDetail(id: Int, type: String?) {
-        val intent = Intent(context, DetailActivity::class.java).apply {
-            putExtra(DetailActivity.ID, id)
-            putExtra(DetailActivity.TYPE, type)
-        }
-        startActivity(intent)
+    private fun showDetail(tvShow: TvShow, type: String?) {
+        findNavController().navigate(
+            TvShowFragmentDirections.actionTvShowToDetailActivity(
+                type,
+                tvShow = tvShow
+            )
+        )
     }
 }

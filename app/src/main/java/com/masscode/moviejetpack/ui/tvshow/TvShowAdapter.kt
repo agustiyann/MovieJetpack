@@ -10,7 +10,7 @@ import com.masscode.moviejetpack.R
 import com.masscode.moviejetpack.data.source.local.entity.TvShow
 import com.masscode.moviejetpack.databinding.ItemTvshowListBinding
 
-class TvShowAdapter(private val showDetail: (Int?, String?) -> Unit) :
+class TvShowAdapter(private val showDetail: (TvShow?, String?) -> Unit) :
     ListAdapter<TvShow, TvShowAdapter.TvViewHolder>(DiffCallback) {
 
     inner class TvViewHolder(private var binding: ItemTvshowListBinding) :
@@ -21,7 +21,7 @@ class TvShowAdapter(private val showDetail: (Int?, String?) -> Unit) :
 
             with(binding.root) {
                 setOnClickListener {
-                    showDetail(tvShows.id, "tv show")
+                    showDetail(tvShows, "tv show")
                 }
             }
         }

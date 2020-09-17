@@ -14,4 +14,8 @@ interface DataSource {
 
     fun getTvShowById(tvId: Int): LiveData<TvShow>
 
+    fun getMovieFavorite(): LiveData<List<Movie>>
+
+    fun addMovieFavorite(movie: Movie)
+
 }

@@ -1,6 +1,7 @@
 package com.masscode.moviejetpack.ui.detail
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.masscode.moviejetpack.data.Repository
 import com.masscode.moviejetpack.data.source.local.entity.TvShow
@@ -9,22 +10,26 @@ import kotlin.properties.Delegates
 
 class DetailViewModel(private val repository: Repository) : ViewModel() {
 
-    private var movieId by Delegates.notNull<Int>()
-    private var tvShowId by Delegates.notNull<Int>()
+    private val _movie = MutableLiveData<Movie>()
+    val movie: LiveData<Movie>
+        get() = _movie
+
+    private val _tvShow = MutableLiveData<TvShow>()
+    val tvShow: LiveData<TvShow>
+        get() = _tvShow
+
     var isMovie = false
 
-    fun setSelectedMovie(id: Int) {
-        this.movieId = id
-    }
-
-    fun setSelectedTvShow(id: Int) {
-        this.tvShowId = id
-    }
-
-    fun getDetailMovie(): LiveData<Movie> {
+    fun setMovie(movie: Movie) {
         isMovie = true
-        return repository.getMovieById(movieId)
+        _movie.postValue(movie)
     }
 
-    fun getDetailTvShow(): LiveData<TvShow> = repository.getTvShowById(tvShowId)
+    fun setTvShow(tvShow: TvShow) {
+        _tvShow.postValue(tvShow)
+    }
+
+//    fun addMovieToFavorite(movie: Movie) {
+//        repository.addMovieFavorite(movie)
+//    }
 }

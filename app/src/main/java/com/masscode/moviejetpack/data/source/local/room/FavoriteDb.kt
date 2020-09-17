@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.masscode.moviejetpack.data.source.local.entity.Movie
 import com.masscode.moviejetpack.data.source.local.entity.TvShow
 
-@Database(entities = [Movie::class, TvShow::class], version = 1, exportSchema = false)
+@Database(version = 1, entities = [Movie::class, TvShow::class], exportSchema = false)
 abstract class FavoriteDb : RoomDatabase() {
 
     abstract fun favoriteDao(): FavoriteDao
@@ -22,7 +22,7 @@ abstract class FavoriteDb : RoomDatabase() {
                     context.applicationContext,
                     FavoriteDb::class.java,
                     "Favorite.db"
-                ).build()
+                ).fallbackToDestructiveMigration().build()
             }
     }
 
