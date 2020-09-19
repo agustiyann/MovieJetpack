@@ -2,6 +2,8 @@ package com.masscode.moviejetpack.data
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
 import com.masscode.moviejetpack.data.source.local.LocalDataSource
 import com.masscode.moviejetpack.data.source.local.entity.TvShow
 import com.masscode.moviejetpack.data.source.remote.RemoteDataSource
@@ -65,6 +67,15 @@ class Repository private constructor(
 
     override suspend fun setMovieFavorite(movie: Movie, state: Boolean) {
         localDataSource.setMovieFavorite(movie, state)
+    }
+
+    override fun getFavoriteMovies(): LiveData<PagedList<Movie>> {
+        val config = PagedList.Config.Builder()
+            .setEnablePlaceholders(false)
+            .setInitialLoadSizeHint(4)
+            .setPageSize(4)
+            .build()
+        return LivePagedListBuilder(localDataSource.getFavoriteMovies(), config).build()
     }
 
 

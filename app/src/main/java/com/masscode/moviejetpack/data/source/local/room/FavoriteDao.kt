@@ -1,6 +1,7 @@
 package com.masscode.moviejetpack.data.source.local.room
 
 import androidx.lifecycle.LiveData
+import androidx.paging.DataSource
 import androidx.room.*
 import com.masscode.moviejetpack.data.source.local.entity.Movie
 import com.masscode.moviejetpack.data.source.local.entity.TvShow
@@ -23,5 +24,8 @@ interface FavoriteDao {
 
     @Update
     suspend fun updateMovie(movie: Movie)
+
+    @Query("SELECT * FROM movie_entity WHERE isFavorite = 1")
+    fun getFavoriteMovies(): DataSource.Factory<Int, Movie>
 
 }
