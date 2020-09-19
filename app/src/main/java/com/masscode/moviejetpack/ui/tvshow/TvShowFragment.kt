@@ -45,11 +45,10 @@ class TvShowFragment : Fragment() {
     }
 
     private fun showDetail(tvShow: TvShow, type: String?) {
-        findNavController().navigate(
-            TvShowFragmentDirections.actionTvShowToDetailActivity(
-                type,
-                tvShow = tvShow
-            )
-        )
+        val intent = Intent(context, DetailActivity::class.java).apply {
+            putExtra(DetailActivity.EXTRA_TV, tvShow)
+            putExtra(DetailActivity.EXTRA_TYPE, type)
+        }
+        startActivity(intent)
     }
 }

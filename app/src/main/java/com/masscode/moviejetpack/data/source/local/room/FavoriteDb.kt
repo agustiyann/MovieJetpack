@@ -22,7 +22,7 @@ abstract class FavoriteDb : RoomDatabase() {
                     context.applicationContext,
                     FavoriteDb::class.java,
                     "Favorite.db"
-                ).fallbackToDestructiveMigration().build()
+                ).build()
             }
     }
 

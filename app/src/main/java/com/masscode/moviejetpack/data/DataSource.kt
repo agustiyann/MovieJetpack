@@ -16,6 +16,4 @@ interface DataSource {
 
     fun getMovieFavorite(): LiveData<List<Movie>>
 
-    fun addMovieFavorite(movie: Movie)
-
 }

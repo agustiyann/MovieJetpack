@@ -45,12 +45,11 @@ class MovieFragment : Fragment() {
     }
 
     private fun showDetail(movie: Movie, type: String?) {
-        findNavController().navigate(
-            MovieFragmentDirections.actionMoviesToDetailActivity(
-                type,
-                movie
-            )
-        )
+        val intent = Intent(context, DetailActivity::class.java).apply {
+            putExtra(DetailActivity.EXTRA_MOVIE, movie)
+            putExtra(DetailActivity.EXTRA_TYPE, type)
+        }
+        startActivity(intent)
     }
 
 }

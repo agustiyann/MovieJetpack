@@ -6,10 +6,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.masscode.moviejetpack.R
+import com.masscode.moviejetpack.data.source.local.entity.Movie
+import com.masscode.moviejetpack.data.source.local.entity.TvShow
 import com.masscode.moviejetpack.databinding.ActivityDetailBinding
 import com.masscode.moviejetpack.viewmodel.ViewModelFactory
 
 class DetailActivity : AppCompatActivity() {
+
+    companion object {
+        const val EXTRA_MOVIE = "movie"
+        const val EXTRA_TV = "tv"
+        const val EXTRA_TYPE = "type"
+    }
 
     private lateinit var viewModel: DetailViewModel
 
@@ -26,9 +34,9 @@ class DetailActivity : AppCompatActivity() {
         val viewModelFactory = ViewModelFactory.getInstance(this)
         viewModel = ViewModelProvider(this, viewModelFactory).get(DetailViewModel::class.java)
 
-        val type = DetailActivityArgs.fromBundle(intent.extras!!).type
-        val movie = DetailActivityArgs.fromBundle(intent.extras!!).movie
-        val tvShow = DetailActivityArgs.fromBundle(intent.extras!!).tvShow
+        val type = intent.getStringExtra(EXTRA_TYPE)
+        val movie = intent.getParcelableExtra<Movie>(EXTRA_MOVIE)
+        val tvShow = intent.getParcelableExtra<TvShow>(EXTRA_TV)
 
         if (type == "movie") {
             viewModel.setMovie(movie!!)

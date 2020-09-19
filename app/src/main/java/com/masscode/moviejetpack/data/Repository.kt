@@ -70,7 +70,5 @@ class Repository private constructor(
 
     override fun getMovieFavorite(): LiveData<List<Movie>> = localDataSource.getAllMovies()
 
-    override fun addMovieFavorite(movie: Movie) = localDataSource.insertMovie(movie)
-
 
 }
