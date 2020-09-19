@@ -16,4 +16,6 @@ interface DataSource {
 
     fun getMovieLocal(): LiveData<List<Movie>>
 
+    suspend fun setMovieFavorite(movie: Movie, state: Boolean)
+
 }

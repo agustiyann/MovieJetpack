@@ -47,14 +47,7 @@ class Repository private constructor(
     }
 
     override fun getMovieById(movieId: Int): LiveData<Movie> {
-        val mMovie = MutableLiveData<Movie>()
-        remoteDataSource.getMovieById(movieId, object : RemoteDataSource.LoadMovieDetailCallback {
-            override fun onDetailReceived(movie: Movie) {
-                mMovie.postValue(movie)
-            }
-        })
-
-        return mMovie
+        return localDataSource.getMovieById(movieId)
     }
 
     override fun getTvShowById(tvId: Int): LiveData<TvShow> {
@@ -69,6 +62,10 @@ class Repository private constructor(
     }
 
     override fun getMovieLocal(): LiveData<List<Movie>> = localDataSource.getAllMovies()
+
+    override suspend fun setMovieFavorite(movie: Movie, state: Boolean) {
+        localDataSource.setMovieFavorite(movie, state)
+    }
 
 
 }

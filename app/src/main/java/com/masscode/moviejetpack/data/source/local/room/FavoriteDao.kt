@@ -17,4 +17,11 @@ interface FavoriteDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertAllMovie(movies: List<Movie>)
 
+    @Transaction
+    @Query("SELECT * FROM movie_entity WHERE id = :movieId")
+    fun getMovieById(movieId: Int): LiveData<Movie>
+
+    @Update
+    suspend fun updateMovie(movie: Movie)
+
 }
