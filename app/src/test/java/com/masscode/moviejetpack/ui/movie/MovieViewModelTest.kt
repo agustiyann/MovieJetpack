@@ -3,10 +3,15 @@ package com.masscode.moviejetpack.ui.movie
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import androidx.paging.PagedList
 import com.masscode.moviejetpack.data.Repository
 import com.masscode.moviejetpack.data.source.local.entity.Movie
 import com.masscode.moviejetpack.utils.DummyData
 import com.nhaarman.mockitokotlin2.verify
+import kotlinx.coroutines.*
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.setMain
+import org.junit.After
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -17,8 +22,11 @@ import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnitRunner
 
-@RunWith(MockitoJUnitRunner::class)
+@ObsoleteCoroutinesApi
+@RunWith(MockitoJUnitRunner.Silent::class)
 class MovieViewModelTest {
+
+    private val mainThreadSurrogate = newSingleThreadContext("UI thread")
 
     private lateinit var viewModel: MovieViewModel
 
@@ -29,26 +37,50 @@ class MovieViewModelTest {
     private lateinit var movieRepository: Repository
 
     @Mock
-    private lateinit var observer: Observer<List<Movie>>
+    private lateinit var observer: Observer<PagedList<Movie>>
 
+    @Mock
+    private lateinit var pagedList: PagedList<Movie>
+
+    @ExperimentalCoroutinesApi
     @Before
     fun setUp() {
+        Dispatchers.setMain(mainThreadSurrogate)
         viewModel = MovieViewModel(movieRepository)
     }
 
+    @ExperimentalCoroutinesApi
+    @After
+    fun tearDown() {
+        Dispatchers.resetMain() // reset main dispatcher to the original Main dispatcher
+        mainThreadSurrogate.close()
+    }
+
     @Test
-    fun getMovieList() {
+    fun getMoviesApi(): Unit = runBlocking {
         val dummyMovies = DummyData.generateMovieList()
         val movies = MutableLiveData<List<Movie>>()
         movies.value = dummyMovies
 
         `when`(movieRepository.getMovies()).thenReturn(movies)
-        val movieList = viewModel.getMovieList().value
         verify(movieRepository).getMovies()
-        assertNotNull(movieList)
-        assertEquals(11, movieList?.size)
+    }
+
+    @Test
+    fun getMoviesLocal() {
+        val dummyMovies = pagedList
+        `when`(dummyMovies.size).thenReturn(20)
+        val movies = MutableLiveData<PagedList<Movie>>()
+        movies.value = dummyMovies
+
+        `when`(movieRepository.getMovieLocal()).thenReturn(movies)
+        val movieEntities = viewModel.getMovieList().value
+        verify(movieRepository).getMovieLocal()
+        assertNotNull(movieEntities)
+        assertEquals(20, movieEntities?.size)
 
         viewModel.getMovieList().observeForever(observer)
         verify(observer).onChanged(dummyMovies)
     }
+
 }

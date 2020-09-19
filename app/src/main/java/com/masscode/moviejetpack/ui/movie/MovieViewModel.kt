@@ -12,9 +12,7 @@ import kotlinx.coroutines.launch
 
 class MovieViewModel(private val repository: Repository) : ViewModel() {
 
-    private val _movies: LiveData<PagedList<Movie>>
-    val movies: LiveData<PagedList<Movie>>
-        get() = _movies
+    fun getMovieList(): LiveData<PagedList<Movie>> = repository.getMovieLocal()
 
     private val vmJob = Job()
     private val coroutineScope = CoroutineScope(vmJob + Dispatchers.Main)
@@ -27,8 +25,6 @@ class MovieViewModel(private val repository: Repository) : ViewModel() {
                 t.printStackTrace()
             }
         }
-
-        _movies = repository.getMovieLocal()
     }
 
 }

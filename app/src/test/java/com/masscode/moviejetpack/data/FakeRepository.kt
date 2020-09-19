@@ -2,6 +2,8 @@ package com.masscode.moviejetpack.data
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
 import com.masscode.moviejetpack.data.source.local.LocalDataSource
 import com.masscode.moviejetpack.data.source.local.entity.Movie
 import com.masscode.moviejetpack.data.source.local.entity.TvShow
@@ -17,6 +19,7 @@ class FakeRepository(
         remoteDataSource.loadMovies(object : RemoteDataSource.LoadMovieCallback {
             override fun onMovieReceived(movieList: List<Movie>) {
                 movieResult.postValue(movieList)
+                localDataSource.insertAllMovies(movieList)
             }
         })
 
@@ -35,14 +38,7 @@ class FakeRepository(
     }
 
     override fun getMovieById(movieId: Int): LiveData<Movie> {
-        val mMovie = MutableLiveData<Movie>()
-        remoteDataSource.getMovieById(movieId, object : RemoteDataSource.LoadMovieDetailCallback {
-            override fun onDetailReceived(movie: Movie) {
-                mMovie.postValue(movie)
-            }
-        })
-
-        return mMovie
+        return localDataSource.getMovieById(movieId)
     }
 
     override fun getTvShowById(tvId: Int): LiveData<TvShow> {
@@ -56,7 +52,25 @@ class FakeRepository(
         return mTvShow
     }
 
-    override fun getMovieFavorite(): LiveData<List<Movie>> = localDataSource.getAllMovies()
+    override fun getMovieLocal(): LiveData<PagedList<Movie>> {
+        val config = PagedList.Config.Builder()
+            .setEnablePlaceholders(false)
+            .setInitialLoadSizeHint(4)
+            .setPageSize(4)
+            .build()
+        return LivePagedListBuilder(localDataSource.getAllMovies(), config).build()
+    }
 
-    override fun addMovieFavorite(movie: Movie) = localDataSource.insertMovie(movie)
+    override suspend fun setMovieFavorite(movie: Movie, state: Boolean) {
+        localDataSource.setMovieFavorite(movie, state)
+    }
+
+    override fun getFavoriteMovies(): LiveData<PagedList<Movie>> {
+        val config = PagedList.Config.Builder()
+            .setEnablePlaceholders(false)
+            .setInitialLoadSizeHint(4)
+            .setPageSize(4)
+            .build()
+        return LivePagedListBuilder(localDataSource.getFavoriteMovies(), config).build()
+    }
 }
