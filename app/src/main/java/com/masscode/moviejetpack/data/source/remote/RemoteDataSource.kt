@@ -49,13 +49,4 @@ class RemoteDataSource private constructor(private val tmdbApi: TMDBApi) {
     interface LoadTvShowCallback {
         fun onTvShowReceived(tvShowList: List<TvShow>)
     }
-
-    interface LoadMovieDetailCallback {
-        fun onDetailReceived(movie: Movie)
-    }
-
-    interface LoadTvShowDetailCallback {
-        fun onDetailReceived(tvShow: TvShow)
-    }
-
 }

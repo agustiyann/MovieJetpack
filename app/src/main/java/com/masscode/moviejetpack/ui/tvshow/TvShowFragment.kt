@@ -23,15 +23,16 @@ class TvShowFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentTvShowBinding.inflate(inflater)
-        val viewModelFactory = ViewModelFactory.getInstance(requireContext())
-        viewModel = ViewModelProvider(this, viewModelFactory).get(TvShowViewModel::class.java)
+        binding.lifecycleOwner = this
+
 
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.lifecycleOwner = viewLifecycleOwner
+        val viewModelFactory = ViewModelFactory.getInstance(requireContext())
+        viewModel = ViewModelProvider(this, viewModelFactory).get(TvShowViewModel::class.java)
 
         val tvShowAdapter = TvShowAdapter { tvShowId, type -> showDetail(tvShowId!!, type) }
         binding.progressBar.visibility = View.VISIBLE

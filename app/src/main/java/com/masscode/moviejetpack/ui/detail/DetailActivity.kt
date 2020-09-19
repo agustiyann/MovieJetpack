@@ -10,8 +10,6 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.masscode.moviejetpack.R
-import com.masscode.moviejetpack.data.source.local.entity.Movie
-import com.masscode.moviejetpack.data.source.local.entity.TvShow
 import com.masscode.moviejetpack.databinding.ActivityDetailBinding
 import com.masscode.moviejetpack.viewmodel.ViewModelFactory
 

@@ -22,15 +22,15 @@ class MovieFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentMovieBinding.inflate(inflater)
-        val viewModelFactory = ViewModelFactory.getInstance(requireContext())
-        viewModel = ViewModelProvider(this, viewModelFactory).get(MovieViewModel::class.java)
+        binding.lifecycleOwner = this
 
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.lifecycleOwner = viewLifecycleOwner
+        val viewModelFactory = ViewModelFactory.getInstance(requireContext())
+        viewModel = ViewModelProvider(this, viewModelFactory).get(MovieViewModel::class.java)
 
         val movieAdapter = MovieAdapter { movieId, type -> showDetail(movieId!!, type) }
         binding.progressBar.visibility = View.VISIBLE

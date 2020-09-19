@@ -7,6 +7,7 @@ import com.masscode.moviejetpack.data.Repository
 import com.masscode.moviejetpack.di.Injection
 import com.masscode.moviejetpack.ui.detail.DetailViewModel
 import com.masscode.moviejetpack.ui.favorite.movie.MovieFavoriteViewModel
+import com.masscode.moviejetpack.ui.favorite.tvshow.TvShowFavoriteViewModel
 import com.masscode.moviejetpack.ui.movie.MovieViewModel
 import com.masscode.moviejetpack.ui.tvshow.TvShowViewModel
 
@@ -17,8 +18,6 @@ class ViewModelFactory private constructor(private val mMovieRepository: Reposit
         @Volatile
         private var instance: ViewModelFactory? = null
 
-        // kode synchronized untuk membuat semua thread tersinkronisasi. Dengan cara ini,
-        // hanya satu thread yang boleh menjalankan fungsi yang sama di waktu yang sama.
         fun getInstance(context: Context): ViewModelFactory =
             instance ?: synchronized(this) {
                 instance ?: ViewModelFactory(Injection.provideRepository(context))
@@ -39,6 +38,9 @@ class ViewModelFactory private constructor(private val mMovieRepository: Reposit
             }
             modelClass.isAssignableFrom(MovieFavoriteViewModel::class.java) -> {
                 MovieFavoriteViewModel(mMovieRepository) as T
+            }
+            modelClass.isAssignableFrom(TvShowFavoriteViewModel::class.java) -> {
+                TvShowFavoriteViewModel(mMovieRepository) as T
             }
             else -> throw Throwable("Unknown ViewModel class: " + modelClass.name)
         }
