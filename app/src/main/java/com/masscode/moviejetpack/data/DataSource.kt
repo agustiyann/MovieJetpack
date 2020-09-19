@@ -6,7 +6,7 @@ import com.masscode.moviejetpack.data.source.local.entity.Movie
 
 interface DataSource {
 
-    fun getMovies(): LiveData<List<Movie>>
+    suspend fun getMovies(): LiveData<List<Movie>>
 
     fun getTvShow(): LiveData<List<TvShow>>
 
@@ -14,6 +14,6 @@ interface DataSource {
 
     fun getTvShowById(tvId: Int): LiveData<TvShow>
 
-    fun getMovieFavorite(): LiveData<List<Movie>>
+    fun getMovieLocal(): LiveData<List<Movie>>
 
 }

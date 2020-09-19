@@ -12,7 +12,7 @@ class FakeRepository(
     private val localDataSource: LocalDataSource
 ) : DataSource {
 
-    override fun getMovies(): LiveData<List<Movie>> {
+    override suspend fun getMovies(): LiveData<List<Movie>> {
         val movieResult = MutableLiveData<List<Movie>>()
         remoteDataSource.loadMovies(object : RemoteDataSource.LoadMovieCallback {
             override fun onMovieReceived(movieList: List<Movie>) {

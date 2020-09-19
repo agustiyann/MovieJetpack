@@ -18,12 +18,6 @@ class LocalDataSource private constructor(private val favoriteDao: FavoriteDao) 
 
     fun getAllTvShows(): LiveData<List<TvShow>> = favoriteDao.getTvShows()
 
-    fun insertMovie(movie: Movie) = favoriteDao.insertMovie(movie)
-
-    fun insertTvShow(tvShow: TvShow) = favoriteDao.insertTvShow(tvShow)
-
-    fun deleteMovie(movie: Movie) = favoriteDao.deleteMovie(movie)
-
-    fun deleteTvShow(tvShow: TvShow) = favoriteDao.deleteTvShow(tvShow)
+    fun insertAllMovies(movies: List<Movie>) = favoriteDao.insertAllMovie(movies)
 
 }

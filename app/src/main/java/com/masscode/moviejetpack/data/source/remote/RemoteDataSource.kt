@@ -6,6 +6,8 @@ import com.masscode.moviejetpack.data.source.remote.response.MovieResponse
 import com.masscode.moviejetpack.data.source.local.entity.Movie
 import com.masscode.moviejetpack.data.source.remote.response.TvShowResponse
 import com.masscode.moviejetpack.utils.EspressoIdlingResource
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -21,23 +23,13 @@ class RemoteDataSource private constructor(private val tmdbApi: TMDBApi) {
         }
     }
 
-    fun loadMovies(callback: LoadMovieCallback) {
+    suspend fun loadMovies(callback: LoadMovieCallback) {
         EspressoIdlingResource.increment()
-        tmdbApi.api.getPopularMovies(page = 1).enqueue(object : Callback<MovieResponse> {
-            override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
-                if (response.isSuccessful) {
-                    val responseBody = response.body()
-                    if (responseBody != null) {
-                        callback.onMovieReceived(responseBody.movies)
-                        EspressoIdlingResource.decrement()
-                    }
-                }
-            }
-
-            override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
-                t.printStackTrace()
-            }
-        })
+        withContext(Dispatchers.IO) {
+            val movies = tmdbApi.api.getPopularMovies(page = 1).movies
+            callback.onMovieReceived(movies)
+            EspressoIdlingResource.decrement()
+        }
     }
 
     fun loadTvShows(callback: LoadTvShowCallback) {

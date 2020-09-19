@@ -23,12 +23,12 @@ class Repository private constructor(
             }
     }
 
-    override fun getMovies(): LiveData<List<Movie>> {
+    override suspend fun getMovies(): LiveData<List<Movie>> {
         val movieResult = MutableLiveData<List<Movie>>()
         remoteDataSource.loadMovies(object : RemoteDataSource.LoadMovieCallback {
             override fun onMovieReceived(movieList: List<Movie>) {
-
                 movieResult.postValue(movieList)
+                localDataSource.insertAllMovies(movieList)
             }
         })
 
@@ -68,7 +68,7 @@ class Repository private constructor(
         return mTvShow
     }
 
-    override fun getMovieFavorite(): LiveData<List<Movie>> = localDataSource.getAllMovies()
+    override fun getMovieLocal(): LiveData<List<Movie>> = localDataSource.getAllMovies()
 
 
 }

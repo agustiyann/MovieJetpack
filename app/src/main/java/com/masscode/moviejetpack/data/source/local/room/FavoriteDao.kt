@@ -14,16 +14,7 @@ interface FavoriteDao {
     @Query("SELECT * FROM tv_entity")
     fun getTvShows(): LiveData<List<TvShow>>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertMovie(movie: Movie)
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertTvShow(tvShow: TvShow)
-
-    @Delete
-    fun deleteMovie(movie: Movie)
-
-    @Delete
-    fun deleteTvShow(tvShow: TvShow)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun insertAllMovie(movies: List<Movie>)
 
 }
