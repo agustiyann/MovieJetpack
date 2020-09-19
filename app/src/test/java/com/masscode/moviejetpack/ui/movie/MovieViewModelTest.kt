@@ -73,9 +73,9 @@ class MovieViewModelTest {
         val movies = MutableLiveData<PagedList<Movie>>()
         movies.value = dummyMovies
 
-        `when`(movieRepository.getMovieLocal()).thenReturn(movies)
+        `when`(movieRepository.getMoviesLocal()).thenReturn(movies)
         val movieEntities = viewModel.getMovieList().value
-        verify(movieRepository).getMovieLocal()
+        verify(movieRepository).getMoviesLocal()
         assertNotNull(movieEntities)
         assertEquals(20, movieEntities?.size)
 

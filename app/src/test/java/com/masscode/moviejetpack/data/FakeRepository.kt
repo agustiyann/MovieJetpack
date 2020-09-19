@@ -26,7 +26,7 @@ class FakeRepository(
         return movieResult
     }
 
-    override fun getTvShow(): LiveData<List<TvShow>> {
+    override suspend fun getTvShow(): LiveData<List<TvShow>> {
         val tvResult = MutableLiveData<List<TvShow>>()
         remoteDataSource.loadTvShows(object : RemoteDataSource.LoadTvShowCallback {
             override fun onTvShowReceived(tvShowList: List<TvShow>) {
@@ -52,7 +52,7 @@ class FakeRepository(
         return mTvShow
     }
 
-    override fun getMovieLocal(): LiveData<PagedList<Movie>> {
+    override fun getMoviesLocal(): LiveData<PagedList<Movie>> {
         val config = PagedList.Config.Builder()
             .setEnablePlaceholders(false)
             .setInitialLoadSizeHint(4)

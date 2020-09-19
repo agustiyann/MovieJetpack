@@ -33,19 +33,21 @@ class TvShowFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.lifecycleOwner = viewLifecycleOwner
 
-        val tvShowAdapter = TvShowAdapter { tvShow, type -> showDetail(tvShow!!, type) }
+        val tvShowAdapter = TvShowAdapter { tvShowId, type -> showDetail(tvShowId!!, type) }
         binding.progressBar.visibility = View.VISIBLE
         viewModel.getTvShowList().observe(viewLifecycleOwner, { movies ->
             binding.progressBar.visibility = View.GONE
             tvShowAdapter.submitList(movies)
+            tvShowAdapter.notifyDataSetChanged()
         })
 
+        binding.rvTvShow.setHasFixedSize(true)
         binding.rvTvShow.adapter = tvShowAdapter
     }
 
-    private fun showDetail(tvShow: TvShow, type: String?) {
+    private fun showDetail(tvShowId: Int, type: String?) {
         val intent = Intent(context, DetailActivity::class.java).apply {
-            putExtra(DetailActivity.EXTRA_TV, tvShow)
+            putExtra(DetailActivity.EXTRA_TV, tvShowId)
             putExtra(DetailActivity.EXTRA_TYPE, type)
         }
         startActivity(intent)

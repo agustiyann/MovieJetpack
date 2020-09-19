@@ -19,10 +19,10 @@ interface ApiServices {
     ): MovieResponse
 
     @GET("tv/popular")
-    fun getPopularTvShows(
+    suspend fun getPopularTvShows(
         @Query("api_key") apiKey: String = BuildConfig.TMDB_API_KEY,
         @Query("page") page: Int
-    ): Call<TvShowResponse>
+    ): TvShowResponse
 
     @GET("movie/{movie_id}")
     fun getDetailMovie(

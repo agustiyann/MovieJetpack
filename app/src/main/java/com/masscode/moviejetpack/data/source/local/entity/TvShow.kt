@@ -17,5 +17,6 @@ data class TvShow(
     @Json(name = "poster_path") val posterPath: String? = "",
     @Json(name = "backdrop_path") val backdropPath: String? = "",
     val popularity: Double? = 0.0,
-    @Json(name = "vote_average") val voteAverage: Float? = 0f
+    @Json(name = "vote_average") val voteAverage: Float? = 0f,
+    var isFavorite: Boolean = false
 ) : Parcelable

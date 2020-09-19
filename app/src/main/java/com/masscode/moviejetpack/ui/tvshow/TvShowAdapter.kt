@@ -3,15 +3,27 @@ package com.masscode.moviejetpack.ui.tvshow
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.masscode.moviejetpack.R
 import com.masscode.moviejetpack.data.source.local.entity.TvShow
 import com.masscode.moviejetpack.databinding.ItemTvshowListBinding
 
-class TvShowAdapter(private val showDetail: (TvShow?, String?) -> Unit) :
-    ListAdapter<TvShow, TvShowAdapter.TvViewHolder>(DiffCallback) {
+class TvShowAdapter(private val showDetail: (Int?, String?) -> Unit) :
+    PagedListAdapter<TvShow, TvShowAdapter.TvViewHolder>(DIFF_CALLBACK) {
+
+    companion object {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<TvShow>() {
+            override fun areItemsTheSame(oldItem: TvShow, newItem: TvShow): Boolean {
+                return oldItem.id == newItem.id
+            }
+
+            override fun areContentsTheSame(oldItem: TvShow, newItem: TvShow): Boolean {
+                return oldItem == newItem
+            }
+        }
+    }
 
     inner class TvViewHolder(private var binding: ItemTvshowListBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -21,7 +33,7 @@ class TvShowAdapter(private val showDetail: (TvShow?, String?) -> Unit) :
 
             with(binding.root) {
                 setOnClickListener {
-                    showDetail(tvShows, "tv show")
+                    showDetail(tvShows.id, "tv show")
                 }
             }
         }
@@ -39,17 +51,8 @@ class TvShowAdapter(private val showDetail: (TvShow?, String?) -> Unit) :
 
     override fun onBindViewHolder(holder: TvShowAdapter.TvViewHolder, position: Int) {
         val currentItem = getItem(position)
-        holder.bind(currentItem)
-    }
-
-    companion object DiffCallback : DiffUtil.ItemCallback<TvShow>() {
-        override fun areItemsTheSame(oldItem: TvShow, newItem: TvShow): Boolean {
-            return oldItem === newItem
+        if (currentItem != null) {
+            holder.bind(currentItem)
         }
-
-        override fun areContentsTheSame(oldItem: TvShow, newItem: TvShow): Boolean {
-            return oldItem.id == newItem.id
-        }
-
     }
 }

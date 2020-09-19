@@ -9,16 +9,22 @@ interface DataSource {
 
     suspend fun getMovies(): LiveData<List<Movie>>
 
-    fun getTvShow(): LiveData<List<TvShow>>
+    suspend fun getTvShow(): LiveData<List<TvShow>>
 
     fun getMovieById(movieId: Int): LiveData<Movie>
 
     fun getTvShowById(tvId: Int): LiveData<TvShow>
 
-    fun getMovieLocal(): LiveData<PagedList<Movie>>
+    fun getMoviesLocal(): LiveData<PagedList<Movie>>
+
+    fun getTvShowsLocal(): LiveData<PagedList<TvShow>>
 
     suspend fun setMovieFavorite(movie: Movie, state: Boolean)
 
+    suspend fun setTvShowFavorite(tvShow: TvShow, state: Boolean)
+
     fun getFavoriteMovies(): LiveData<PagedList<Movie>>
+
+    fun getFavoriteTvShows(): LiveData<PagedList<TvShow>>
 
 }

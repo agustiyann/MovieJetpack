@@ -15,6 +15,7 @@ import kotlinx.coroutines.launch
 class DetailViewModel(private val repository: Repository) : ViewModel() {
 
     val movieId = MutableLiveData<Int>()
+    val tvId = MutableLiveData<Int>()
     var isMovie = false
 
     fun setSelectedMovie(movieId: Int) {
@@ -22,26 +23,34 @@ class DetailViewModel(private val repository: Repository) : ViewModel() {
         this.movieId.value = movieId
     }
 
-    val moviee: LiveData<Movie> = Transformations.switchMap(movieId) { mId ->
+    fun setSelectedTvId(tvId: Int) {
+        this.tvId.value = tvId
+    }
+
+    val movie: LiveData<Movie> = Transformations.switchMap(movieId) { mId ->
         repository.getMovieById(mId)
     }
 
-    private val _tvShow = MutableLiveData<TvShow>()
-    val tvShow: LiveData<TvShow>
-        get() = _tvShow
+    val tvShow: LiveData<TvShow> = Transformations.switchMap(tvId) { mId ->
+        repository.getTvShowById(mId)
+    }
 
     private val vmJob = Job()
     private val coroutineScope = CoroutineScope(vmJob + Dispatchers.IO)
 
-    fun setTvShow(tvShow: TvShow) {
-        _tvShow.postValue(tvShow)
-    }
-
     fun setMovieFavorite() {
-        val movie = moviee.value
+        val movie = movie.value
         val newState = !movie!!.isFavorite
         coroutineScope.launch {
             repository.setMovieFavorite(movie, newState)
+        }
+    }
+
+    fun setTvShowFavorite() {
+        val tvShow = tvShow.value
+        val newState = !tvShow!!.isFavorite
+        coroutineScope.launch {
+            repository.setTvShowFavorite(tvShow, newState)
         }
     }
 }

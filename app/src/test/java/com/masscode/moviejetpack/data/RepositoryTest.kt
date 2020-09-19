@@ -2,7 +2,6 @@ package com.masscode.moviejetpack.data
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.paging.DataSource
-import com.bumptech.glide.load.engine.Resource
 import com.masscode.moviejetpack.data.source.local.LocalDataSource
 import com.masscode.moviejetpack.data.source.local.entity.Movie
 import com.masscode.moviejetpack.data.source.remote.RemoteDataSource
@@ -37,7 +36,7 @@ class RepositoryTest {
     fun getAllMovies() {
         val dataSourceFactory = Mockito.mock(DataSource.Factory::class.java) as DataSource.Factory<Int, Movie>
         `when`(local.getAllMovies()).thenReturn(dataSourceFactory)
-        repository.getMovieLocal()
+        repository.getMoviesLocal()
 
         val movieEntities = PagedListUtil.mockPagedList(DummyData.generateTvShowList())
         verify(local).getAllMovies()
