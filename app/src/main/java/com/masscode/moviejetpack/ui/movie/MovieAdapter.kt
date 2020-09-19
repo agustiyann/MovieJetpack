@@ -10,7 +10,7 @@ import com.masscode.moviejetpack.R
 import com.masscode.moviejetpack.data.source.local.entity.Movie
 import com.masscode.moviejetpack.databinding.ItemMovieListBinding
 
-class MovieAdapter(private val showDetail: (Movie?, String?) -> Unit) :
+class MovieAdapter(private val showDetail: (Int?, String?) -> Unit) :
     ListAdapter<Movie, MovieAdapter.MovieViewHolder>(DiffCallback) {
 
     inner class MovieViewHolder(private var binding: ItemMovieListBinding) :
@@ -21,7 +21,7 @@ class MovieAdapter(private val showDetail: (Movie?, String?) -> Unit) :
 
             with(binding.root) {
                 setOnClickListener {
-                    showDetail(movie, "movie")
+                    showDetail(movie.id, "movie")
                 }
             }
         }

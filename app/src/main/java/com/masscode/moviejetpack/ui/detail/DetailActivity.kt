@@ -18,7 +18,7 @@ import com.masscode.moviejetpack.viewmodel.ViewModelFactory
 class DetailActivity : AppCompatActivity() {
 
     companion object {
-        const val EXTRA_MOVIE = "movie"
+        const val EXTRA_MOVIE = "id"
         const val EXTRA_TV = "tv"
         const val EXTRA_TYPE = "type"
     }
@@ -40,11 +40,11 @@ class DetailActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, viewModelFactory).get(DetailViewModel::class.java)
 
         val type = intent.getStringExtra(EXTRA_TYPE)
-        val movie = intent.getParcelableExtra<Movie>(EXTRA_MOVIE)
+        val id = intent.getIntExtra(EXTRA_MOVIE, 0)
         val tvShow = intent.getParcelableExtra<TvShow>(EXTRA_TV)
 
         if (type == "movie") {
-            viewModel.setSelectedMovie(movie?.id!!)
+            viewModel.setSelectedMovie(id)
             viewModel.moviee.observe(this, { data ->
                 binding.progressBar.visibility = View.GONE
                 binding.movie = data
