@@ -37,8 +37,10 @@ class MovieFragment : Fragment() {
         viewModel.movies.observe(viewLifecycleOwner, { movies ->
             binding.progressBar.visibility = View.GONE
             movieAdapter.submitList(movies)
+            movieAdapter.notifyDataSetChanged()
         })
 
+        binding.rvMovies.setHasFixedSize(true)
         binding.rvMovies.adapter = movieAdapter
     }
 

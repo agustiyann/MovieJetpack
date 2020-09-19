@@ -63,7 +63,14 @@ class Repository private constructor(
         return mTvShow
     }
 
-    override fun getMovieLocal(): LiveData<List<Movie>> = localDataSource.getAllMovies()
+    override fun getMovieLocal(): LiveData<PagedList<Movie>> {
+        val config = PagedList.Config.Builder()
+            .setEnablePlaceholders(false)
+            .setInitialLoadSizeHint(4)
+            .setPageSize(4)
+            .build()
+        return LivePagedListBuilder(localDataSource.getAllMovies(), config).build()
+    }
 
     override suspend fun setMovieFavorite(movie: Movie, state: Boolean) {
         localDataSource.setMovieFavorite(movie, state)

@@ -15,7 +15,7 @@ interface DataSource {
 
     fun getTvShowById(tvId: Int): LiveData<TvShow>
 
-    fun getMovieLocal(): LiveData<List<Movie>>
+    fun getMovieLocal(): LiveData<PagedList<Movie>>
 
     suspend fun setMovieFavorite(movie: Movie, state: Boolean)
 

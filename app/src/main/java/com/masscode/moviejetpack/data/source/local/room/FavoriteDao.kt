@@ -10,7 +10,7 @@ import com.masscode.moviejetpack.data.source.local.entity.TvShow
 interface FavoriteDao {
 
     @Query("SELECT * FROM movie_entity")
-    fun getMovies(): LiveData<List<Movie>>
+    fun getMovies(): DataSource.Factory<Int, Movie>
 
     @Query("SELECT * FROM tv_entity")
     fun getTvShows(): LiveData<List<TvShow>>

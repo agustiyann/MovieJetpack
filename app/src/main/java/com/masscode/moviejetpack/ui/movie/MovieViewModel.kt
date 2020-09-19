@@ -2,6 +2,7 @@ package com.masscode.moviejetpack.ui.movie
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.paging.PagedList
 import com.masscode.moviejetpack.data.Repository
 import com.masscode.moviejetpack.data.source.local.entity.Movie
 import kotlinx.coroutines.CoroutineScope
@@ -11,12 +12,12 @@ import kotlinx.coroutines.launch
 
 class MovieViewModel(private val repository: Repository) : ViewModel() {
 
-    private val _movies: LiveData<List<Movie>>
-    val movies: LiveData<List<Movie>>
+    private val _movies: LiveData<PagedList<Movie>>
+    val movies: LiveData<PagedList<Movie>>
         get() = _movies
 
     private val vmJob = Job()
-    private val coroutineScope = CoroutineScope(vmJob + Dispatchers.IO)
+    private val coroutineScope = CoroutineScope(vmJob + Dispatchers.Main)
 
     init {
         coroutineScope.launch {
