@@ -15,8 +15,8 @@ class MovieViewModel(private val repository: Repository) : ViewModel() {
     val movies: LiveData<List<Movie>>
         get() = _movies
 
-    val vmJob = Job()
-    val coroutineScope = CoroutineScope(vmJob + Dispatchers.IO)
+    private val vmJob = Job()
+    private val coroutineScope = CoroutineScope(vmJob + Dispatchers.IO)
 
     init {
         coroutineScope.launch {
