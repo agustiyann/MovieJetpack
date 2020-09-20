@@ -27,4 +27,9 @@ class MovieViewModel(private val repository: Repository) : ViewModel() {
         }
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        vmJob.cancel()
+    }
+
 }
