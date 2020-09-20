@@ -42,6 +42,7 @@ class DetailActivity : AppCompatActivity() {
         val movieId = intent.getIntExtra(EXTRA_MOVIE, 0)
         val tvId = intent.getIntExtra(EXTRA_TV, 0)
 
+        binding.progressBar.visibility = View.VISIBLE
         if (type == "movie") {
             viewModel.setSelectedMovie(movieId)
             viewModel.movie.observe(this, { data ->
