@@ -23,7 +23,7 @@ import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnitRunner
 
 @ObsoleteCoroutinesApi
-@RunWith(MockitoJUnitRunner.Silent::class)
+@RunWith(MockitoJUnitRunner::class)
 class MovieViewModelTest {
 
     private val mainThreadSurrogate = newSingleThreadContext("UI thread")
@@ -57,17 +57,7 @@ class MovieViewModelTest {
     }
 
     @Test
-    fun getMoviesApi(): Unit = runBlocking {
-        val dummyMovies = DummyData.generateMovieList()
-        val movies = MutableLiveData<List<Movie>>()
-        movies.value = dummyMovies
-
-        `when`(movieRepository.getMovies()).thenReturn(movies)
-        verify(movieRepository).getMovies()
-    }
-
-    @Test
-    fun getMoviesLocal() {
+    fun getMovieList() {
         val dummyMovies = pagedList
         `when`(dummyMovies.size).thenReturn(20)
         val movies = MutableLiveData<PagedList<Movie>>()
@@ -82,5 +72,4 @@ class MovieViewModelTest {
         viewModel.getMovieList().observeForever(observer)
         verify(observer).onChanged(dummyMovies)
     }
-
 }

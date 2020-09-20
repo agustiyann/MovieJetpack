@@ -31,6 +31,7 @@ class FakeRepository(
         remoteDataSource.loadTvShows(object : RemoteDataSource.LoadTvShowCallback {
             override fun onTvShowReceived(tvShowList: List<TvShow>) {
                 tvResult.postValue(tvShowList)
+                localDataSource.insertAllTvShow(tvShowList)
             }
         })
 
@@ -42,14 +43,7 @@ class FakeRepository(
     }
 
     override fun getTvShowById(tvId: Int): LiveData<TvShow> {
-        val mTvShow = MutableLiveData<TvShow>()
-        remoteDataSource.getTvShowById(tvId, object : RemoteDataSource.LoadTvShowDetailCallback {
-            override fun onDetailReceived(tvShow: TvShow) {
-                mTvShow.postValue(tvShow)
-            }
-        })
-
-        return mTvShow
+        return localDataSource.getTvShowById(tvId)
     }
 
     override fun getMoviesLocal(): LiveData<PagedList<Movie>> {
@@ -61,8 +55,21 @@ class FakeRepository(
         return LivePagedListBuilder(localDataSource.getAllMovies(), config).build()
     }
 
+    override fun getTvShowsLocal(): LiveData<PagedList<TvShow>> {
+        val config = PagedList.Config.Builder()
+            .setEnablePlaceholders(false)
+            .setInitialLoadSizeHint(4)
+            .setPageSize(4)
+            .build()
+        return LivePagedListBuilder(localDataSource.getAllTvShows(), config).build()
+    }
+
     override suspend fun setMovieFavorite(movie: Movie, state: Boolean) {
         localDataSource.setMovieFavorite(movie, state)
+    }
+
+    override suspend fun setTvShowFavorite(tvShow: TvShow, state: Boolean) {
+        localDataSource.setTvShowFavorite(tvShow, state)
     }
 
     override fun getFavoriteMovies(): LiveData<PagedList<Movie>> {
@@ -72,5 +79,14 @@ class FakeRepository(
             .setPageSize(4)
             .build()
         return LivePagedListBuilder(localDataSource.getFavoriteMovies(), config).build()
+    }
+
+    override fun getFavoriteTvShows(): LiveData<PagedList<TvShow>> {
+        val config = PagedList.Config.Builder()
+            .setEnablePlaceholders(false)
+            .setInitialLoadSizeHint(4)
+            .setPageSize(4)
+            .build()
+        return LivePagedListBuilder(localDataSource.getFavoriteTvShows(), config).build()
     }
 }

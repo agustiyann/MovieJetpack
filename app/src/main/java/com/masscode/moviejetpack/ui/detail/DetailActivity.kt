@@ -1,7 +1,6 @@
 package com.masscode.moviejetpack.ui.detail
 
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -95,7 +94,6 @@ class DetailActivity : AppCompatActivity() {
     private fun setFavoriteState(state: Boolean) {
         if (menu == null) return
         val menuItem = menu?.findItem(R.id.action_favorite)
-        Log.d("STATE", "this movie state: $state")
         if (state) {
             menuItem?.icon = ContextCompat.getDrawable(this, R.drawable.ic_favorite)
         } else {

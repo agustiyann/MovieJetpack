@@ -1,11 +1,11 @@
 package com.masscode.moviejetpack.utils
 
 import android.widget.ImageView
-import android.widget.RatingBar
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.masscode.moviejetpack.R
+import jp.wasabeef.glide.transformations.BlurTransformation
 
 @BindingAdapter("showImageFromNetwork")
 fun showImageFromNetwork(imgView: ImageView, url: String?) {
@@ -14,7 +14,9 @@ fun showImageFromNetwork(imgView: ImageView, url: String?) {
         .into(imgView)
 }
 
-@BindingAdapter("setRating")
-fun setRating(ratingBar: RatingBar, float: Float) {
-    ratingBar.rating = float / 2
+@BindingAdapter("showBlurImage")
+fun showBlurImage(imgView: ImageView, url: String?) {
+    Glide.with(imgView.context).load("https://image.tmdb.org/t/p/w500$url")
+        .apply(RequestOptions.bitmapTransform(BlurTransformation(10, 1)))
+        .into(imgView)
 }

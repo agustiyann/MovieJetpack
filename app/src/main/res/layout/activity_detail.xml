@@ -38,7 +38,7 @@
 
         <ImageView
             android:id="@+id/blur_image"
-            showImageFromNetwork="@{viewModel.isMovie ? movie.backdropPath : tvShow.backdropPath}"
+            showBlurImage="@{viewModel.isMovie ? movie.backdropPath : tvShow.backdropPath}"
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:contentDescription="@string/poster"
