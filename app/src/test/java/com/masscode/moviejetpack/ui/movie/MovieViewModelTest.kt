@@ -6,17 +6,19 @@ import androidx.lifecycle.Observer
 import androidx.paging.PagedList
 import com.masscode.moviejetpack.data.Repository
 import com.masscode.moviejetpack.data.source.local.entity.Movie
-import com.masscode.moviejetpack.utils.DummyData
 import com.nhaarman.mockitokotlin2.verify
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.ObsoleteCoroutinesApi
+import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import org.junit.After
-import org.junit.Test
-
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Rule
+import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito.`when`

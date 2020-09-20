@@ -12,6 +12,7 @@ import com.masscode.moviejetpack.databinding.FragmentFavoriteBinding
 
 class FavoriteFragment : Fragment() {
 
+    private lateinit var binding: FragmentFavoriteBinding
     private lateinit var tabLayout: TabLayout
     private lateinit var viewPager: ViewPager
 
@@ -20,7 +21,13 @@ class FavoriteFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val binding = FragmentFavoriteBinding.inflate(inflater)
+        binding = FragmentFavoriteBinding.inflate(inflater)
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         tabLayout = binding.tabs
         viewPager = binding.viewPager
@@ -40,12 +47,5 @@ class FavoriteFragment : Fragment() {
             override fun onTabUnselected(tab: TabLayout.Tab) {}
             override fun onTabReselected(tab: TabLayout.Tab) {}
         })
-
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
     }
 }

@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 class DetailViewModel(private val repository: Repository) : ViewModel() {
 
     val movieId = MutableLiveData<Int>()
-    val tvId = MutableLiveData<Int>()
+    private val tvId = MutableLiveData<Int>()
     var isMovie = false
 
     fun setSelectedMovie(movieId: Int) {

@@ -1,17 +1,11 @@
 package com.masscode.moviejetpack.data.source.remote
 
-import android.util.Log
+import com.masscode.moviejetpack.data.source.local.entity.Movie
 import com.masscode.moviejetpack.data.source.local.entity.TvShow
 import com.masscode.moviejetpack.data.source.remote.network.TMDBApi
-import com.masscode.moviejetpack.data.source.remote.response.MovieResponse
-import com.masscode.moviejetpack.data.source.local.entity.Movie
-import com.masscode.moviejetpack.data.source.remote.response.TvShowResponse
 import com.masscode.moviejetpack.utils.EspressoIdlingResource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class RemoteDataSource private constructor(private val tmdbApi: TMDBApi) {
 

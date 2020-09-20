@@ -6,9 +6,11 @@ import androidx.lifecycle.Observer
 import androidx.paging.PagedList
 import com.masscode.moviejetpack.data.Repository
 import com.masscode.moviejetpack.data.source.local.entity.TvShow
-import com.masscode.moviejetpack.utils.DummyData
 import com.nhaarman.mockitokotlin2.verify
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.ObsoleteCoroutinesApi
+import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import org.junit.After

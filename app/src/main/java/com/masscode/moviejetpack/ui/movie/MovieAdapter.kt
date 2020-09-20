@@ -3,10 +3,8 @@ package com.masscode.moviejetpack.ui.movie
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.paging.PagedList
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.masscode.moviejetpack.R
 import com.masscode.moviejetpack.data.source.local.entity.Movie

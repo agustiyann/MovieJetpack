@@ -8,7 +8,7 @@ import com.masscode.moviejetpack.ui.favorite.tvshow.TvShowFavoriteFragment
 
 class PagerAdapter(
     fm: FragmentManager,
-    var totalTabs: Int
+    private var totalTabs: Int
 ) : FragmentStatePagerAdapter(fm, totalTabs) {
 
     override fun getItem(position: Int): Fragment {
