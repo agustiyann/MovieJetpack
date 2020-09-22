@@ -32,7 +32,7 @@ class DetailActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
 
         setSupportActionBar(binding.movieDetailToolbar)
-        supportActionBar?.title = null
+        supportActionBar?.title = "Detail"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val viewModelFactory = ViewModelFactory.getInstance(this)
