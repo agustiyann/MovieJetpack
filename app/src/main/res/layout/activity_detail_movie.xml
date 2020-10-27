@@ -48,7 +48,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="bottom"
-                    android:background="#7F000000" />
+                    android:background="#2F000000" />
 
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/movie_detail_toolbar"
@@ -80,7 +80,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:text="@string/overview"
-                    android:textSize="17sp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -95,6 +95,7 @@
                     android:layout_marginEnd="16dp"
                     android:layout_marginRight="16dp"
                     android:text="@{movie.overview}"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
@@ -123,7 +124,7 @@
                     android:layout_marginEnd="16dp"
                     android:layout_marginRight="16dp"
                     android:text="@string/details"
-                    android:textSize="17sp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/poster_image"
@@ -135,6 +136,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
                     app:layout_constraintStart_toEndOf="@+id/poster_image"
                     app:layout_constraintTop_toBottomOf="@+id/textView"
                     app:setRatingText="@{movie.voteAverage.toString()}"
@@ -162,6 +164,7 @@
                     android:layout_marginEnd="16dp"
                     android:layout_marginRight="16dp"
                     android:text="@{movie.releaseDate}"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/poster_image"
                     app:layout_constraintTop_toBottomOf="@+id/rating_detail"
