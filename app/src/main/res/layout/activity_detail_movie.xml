@@ -48,7 +48,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="bottom"
-                    android:background="#2F000000" />
+                    android:background="@drawable/black_gradient" />
 
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/movie_detail_toolbar"

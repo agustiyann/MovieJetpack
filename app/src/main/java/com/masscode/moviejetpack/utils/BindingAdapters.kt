@@ -8,11 +8,10 @@ import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.masscode.moviejetpack.R
-import jp.wasabeef.glide.transformations.BlurTransformation
 
 @BindingAdapter("showImageFromNetwork")
 fun showImageFromNetwork(imgView: ImageView, url: String?) {
-    Glide.with(imgView.context).load("https://image.tmdb.org/t/p/w342$url")
+    Glide.with(imgView.context).load("https://image.tmdb.org/t/p/w780$url")
         .apply(RequestOptions.placeholderOf(R.color.colorAccent).error(R.color.colorAccent))
         .into(imgView)
 }
