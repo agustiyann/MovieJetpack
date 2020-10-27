@@ -9,4 +9,6 @@
     <string name="overview">Overview</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="favorite">Favorite</string>
+    <string name="details">Details</string>
+    <string name="add_button">Add Button</string>
 </resources>

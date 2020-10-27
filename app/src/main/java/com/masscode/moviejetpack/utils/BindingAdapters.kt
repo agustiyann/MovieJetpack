@@ -1,6 +1,9 @@
 package com.masscode.moviejetpack.utils
 
+import android.annotation.SuppressLint
 import android.widget.ImageView
+import android.widget.RatingBar
+import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -14,9 +17,13 @@ fun showImageFromNetwork(imgView: ImageView, url: String?) {
         .into(imgView)
 }
 
-@BindingAdapter("showBlurImage")
-fun showBlurImage(imgView: ImageView, url: String?) {
-    Glide.with(imgView.context).load("https://image.tmdb.org/t/p/w500$url")
-        .apply(RequestOptions.bitmapTransform(BlurTransformation(10, 1)))
-        .into(imgView)
+@BindingAdapter("app:setRating")
+fun setRating(ratingBar: RatingBar, rating: Float) {
+    ratingBar.rating = rating / 2
+}
+
+@SuppressLint("SetTextI18n")
+@BindingAdapter("app:setRatingText")
+fun setRatingText(text: TextView, rating: String) {
+    text.text = "Rating: $rating"
 }

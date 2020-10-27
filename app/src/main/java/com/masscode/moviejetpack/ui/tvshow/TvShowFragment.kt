@@ -7,8 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.masscode.moviejetpack.data.source.local.entity.TvShow
 import com.masscode.moviejetpack.databinding.FragmentTvShowBinding
-import com.masscode.moviejetpack.ui.detail.DetailActivity
+import com.masscode.moviejetpack.ui.detail.DetailTvShowActivity
 import com.masscode.moviejetpack.viewmodel.ViewModelFactory
 
 class TvShowFragment : Fragment() {
@@ -33,7 +34,7 @@ class TvShowFragment : Fragment() {
         val viewModelFactory = ViewModelFactory.getInstance(requireContext())
         viewModel = ViewModelProvider(this, viewModelFactory).get(TvShowViewModel::class.java)
 
-        val tvShowAdapter = TvShowAdapter { tvShowId, type -> showDetail(tvShowId!!, type) }
+        val tvShowAdapter = TvShowAdapter { tvShow -> showDetail(tvShow) }
         binding.progressBar.visibility = View.VISIBLE
         viewModel.getTvShowList().observe(viewLifecycleOwner, { movies ->
             binding.progressBar.visibility = View.GONE
@@ -45,10 +46,9 @@ class TvShowFragment : Fragment() {
         binding.rvTvShow.adapter = tvShowAdapter
     }
 
-    private fun showDetail(tvShowId: Int, type: String?) {
-        val intent = Intent(context, DetailActivity::class.java).apply {
-            putExtra(DetailActivity.EXTRA_TV, tvShowId)
-            putExtra(DetailActivity.EXTRA_TYPE, type)
+    private fun showDetail(tvShow: TvShow?) {
+        val intent = Intent(context, DetailTvShowActivity::class.java).apply {
+            putExtra(DetailTvShowActivity.EXTRA_TV, tvShow)
         }
         startActivity(intent)
     }

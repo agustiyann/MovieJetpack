@@ -5,7 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.masscode.moviejetpack.data.Repository
 import com.masscode.moviejetpack.di.Injection
-import com.masscode.moviejetpack.ui.detail.DetailViewModel
+import com.masscode.moviejetpack.ui.detail.DetailMovieViewModel
+import com.masscode.moviejetpack.ui.detail.DetailTvShowViewModel
 import com.masscode.moviejetpack.ui.favorite.movie.MovieFavoriteViewModel
 import com.masscode.moviejetpack.ui.favorite.tvshow.TvShowFavoriteViewModel
 import com.masscode.moviejetpack.ui.movie.MovieViewModel
@@ -33,8 +34,11 @@ class ViewModelFactory private constructor(private val mMovieRepository: Reposit
             modelClass.isAssignableFrom(TvShowViewModel::class.java) -> {
                 TvShowViewModel(mMovieRepository) as T
             }
-            modelClass.isAssignableFrom(DetailViewModel::class.java) -> {
-                DetailViewModel(mMovieRepository) as T
+            modelClass.isAssignableFrom(DetailMovieViewModel::class.java) -> {
+                DetailMovieViewModel(mMovieRepository) as T
+            }
+            modelClass.isAssignableFrom(DetailTvShowViewModel::class.java) -> {
+                DetailTvShowViewModel(mMovieRepository) as T
             }
             modelClass.isAssignableFrom(MovieFavoriteViewModel::class.java) -> {
                 MovieFavoriteViewModel(mMovieRepository) as T

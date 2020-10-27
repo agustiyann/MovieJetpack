@@ -2,13 +2,14 @@ package com.masscode.moviejetpack.ui.favorite.movie
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.masscode.moviejetpack.data.source.local.entity.Movie
 import com.masscode.moviejetpack.databinding.FragmentMovieFavoriteBinding
-import com.masscode.moviejetpack.ui.detail.DetailActivity
+import com.masscode.moviejetpack.ui.detail.DetailMovieActivity
 import com.masscode.moviejetpack.viewmodel.ViewModelFactory
 
 class MovieFavoriteFragment : Fragment() {
@@ -33,7 +34,7 @@ class MovieFavoriteFragment : Fragment() {
         val factory = ViewModelFactory.getInstance(requireActivity())
         viewModel = ViewModelProvider(this, factory).get(MovieFavoriteViewModel::class.java)
 
-        adapter = MovieFavoriteAdapter { movieId, type -> showDetail(movieId!!, type) }
+        adapter = MovieFavoriteAdapter { movie -> showDetail(movie) }
         binding.progressBar.visibility = View.VISIBLE
         viewModel.getFavoriteMovies().observe(viewLifecycleOwner, { movies ->
             binding.progressBar.visibility = View.GONE
@@ -54,10 +55,9 @@ class MovieFavoriteFragment : Fragment() {
         })
     }
 
-    private fun showDetail(movieId: Int, type: String?) {
-        val intent = Intent(context, DetailActivity::class.java).apply {
-            putExtra(DetailActivity.EXTRA_MOVIE, movieId)
-            putExtra(DetailActivity.EXTRA_TYPE, type)
+    private fun showDetail(movie: Movie?) {
+        val intent = Intent(context, DetailMovieActivity::class.java).apply {
+            putExtra(DetailMovieActivity.EXTRA_MOVIE, movie)
         }
         startActivity(intent)
     }

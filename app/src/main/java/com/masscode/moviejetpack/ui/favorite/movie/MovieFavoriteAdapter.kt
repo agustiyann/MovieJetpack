@@ -10,7 +10,7 @@ import com.masscode.moviejetpack.R
 import com.masscode.moviejetpack.data.source.local.entity.Movie
 import com.masscode.moviejetpack.databinding.ItemMovieListBinding
 
-class MovieFavoriteAdapter(private val showDetail: (Int?, String?) -> Unit) :
+class MovieFavoriteAdapter(private val showDetail: (Movie?) -> Unit) :
     PagedListAdapter<Movie, MovieFavoriteAdapter.MovieViewHolder>(DIFF_CALLBACK) {
 
     companion object {
@@ -33,7 +33,7 @@ class MovieFavoriteAdapter(private val showDetail: (Int?, String?) -> Unit) :
 
             with(binding.root) {
                 setOnClickListener {
-                    showDetail(movie.id, "movie")
+                    showDetail(movie)
                 }
             }
         }

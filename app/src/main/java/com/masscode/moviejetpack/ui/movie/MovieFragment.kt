@@ -7,8 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.masscode.moviejetpack.data.source.local.entity.Movie
 import com.masscode.moviejetpack.databinding.FragmentMovieBinding
-import com.masscode.moviejetpack.ui.detail.DetailActivity
+import com.masscode.moviejetpack.ui.detail.DetailMovieActivity
 import com.masscode.moviejetpack.viewmodel.ViewModelFactory
 
 class MovieFragment : Fragment() {
@@ -32,7 +33,7 @@ class MovieFragment : Fragment() {
         val viewModelFactory = ViewModelFactory.getInstance(requireContext())
         viewModel = ViewModelProvider(this, viewModelFactory).get(MovieViewModel::class.java)
 
-        val movieAdapter = MovieAdapter { movieId, type -> showDetail(movieId!!, type) }
+        val movieAdapter = MovieAdapter { movie-> showDetail(movie!!) }
         binding.progressBar.visibility = View.VISIBLE
         viewModel.getMovieList().observe(viewLifecycleOwner, { movies ->
             binding.progressBar.visibility = View.GONE
@@ -44,10 +45,9 @@ class MovieFragment : Fragment() {
         binding.rvMovies.adapter = movieAdapter
     }
 
-    private fun showDetail(movieId: Int, type: String?) {
-        val intent = Intent(context, DetailActivity::class.java).apply {
-            putExtra(DetailActivity.EXTRA_MOVIE, movieId)
-            putExtra(DetailActivity.EXTRA_TYPE, type)
+    private fun showDetail(movie: Movie) {
+        val intent = Intent(context, DetailMovieActivity::class.java).apply {
+            putExtra(DetailMovieActivity.EXTRA_MOVIE, movie)
         }
         startActivity(intent)
     }

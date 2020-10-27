@@ -10,7 +10,7 @@ import com.masscode.moviejetpack.R
 import com.masscode.moviejetpack.data.source.local.entity.TvShow
 import com.masscode.moviejetpack.databinding.ItemTvshowListBinding
 
-class TvShowFavoriteAdapter(private val showDetail: (Int?, String?) -> Unit) :
+class TvShowFavoriteAdapter(private val showDetail: (TvShow?) -> Unit) :
     PagedListAdapter<TvShow, TvShowFavoriteAdapter.TvViewHolder>(DIFF_CALLBACK) {
 
     companion object {
@@ -33,7 +33,7 @@ class TvShowFavoriteAdapter(private val showDetail: (Int?, String?) -> Unit) :
 
             with(binding.root) {
                 setOnClickListener {
-                    showDetail(tvShows.id, "tv show")
+                    showDetail(tvShows)
                 }
             }
         }
