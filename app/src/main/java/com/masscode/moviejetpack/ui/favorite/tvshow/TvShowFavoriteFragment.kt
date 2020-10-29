@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.masscode.moviejetpack.data.source.local.entity.TvShow
 import com.masscode.moviejetpack.databinding.FragmentTvShowFavoriteBinding
+import com.masscode.moviejetpack.ui.detail.DetailMovieActivity
 import com.masscode.moviejetpack.ui.detail.DetailTvShowActivity
 import com.masscode.moviejetpack.viewmodel.ViewModelFactory
 
@@ -59,6 +60,7 @@ class TvShowFavoriteFragment : Fragment() {
     private fun showDetail(tvShow: TvShow?) {
         val intent = Intent(context, DetailTvShowActivity::class.java).apply {
             putExtra(DetailTvShowActivity.EXTRA_TV, tvShow)
+            putExtra(DetailTvShowActivity.EXTRA_ORIGIN_TV, "favorite")
         }
         startActivity(intent)
     }

@@ -12,6 +12,10 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
+    companion object {
+        const val EXTRA_SCREEN = "extra_screen"
+    }
+
     private val mOnNavigationItemSelectedListener: BottomNavigationView.OnNavigationItemSelectedListener =
         BottomNavigationView.OnNavigationItemSelectedListener { item ->
             val fragment: Fragment
@@ -63,6 +67,16 @@ class MainActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             bottom_nav.selectedItemId = R.id.movies
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val screen = intent.getStringExtra(EXTRA_SCREEN)
+        when (screen) {
+            "movie" -> bottom_nav.selectedItemId = R.id.movies
+            "tv_show" -> bottom_nav.selectedItemId = R.id.tv_show
+            "favorite" -> bottom_nav.selectedItemId = R.id.favorite
         }
     }
 }

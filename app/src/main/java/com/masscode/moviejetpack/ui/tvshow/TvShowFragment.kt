@@ -49,6 +49,7 @@ class TvShowFragment : Fragment() {
     private fun showDetail(tvShow: TvShow?) {
         val intent = Intent(context, DetailTvShowActivity::class.java).apply {
             putExtra(DetailTvShowActivity.EXTRA_TV, tvShow)
+            putExtra(DetailTvShowActivity.EXTRA_ORIGIN_TV, "tv_show")
         }
         startActivity(intent)
     }

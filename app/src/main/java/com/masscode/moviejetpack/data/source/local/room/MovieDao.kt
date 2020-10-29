@@ -9,10 +9,10 @@ import com.masscode.moviejetpack.data.source.local.entity.TvShow
 @Dao
 interface FavoriteDao {
 
-    @Query("SELECT * FROM movie_entity")
+    @Query("SELECT * FROM movie_entity LIMIT 20")
     fun getMovies(): DataSource.Factory<Int, Movie>
 
-    @Query("SELECT * FROM tv_entity")
+    @Query("SELECT * FROM tv_entity LIMIT 20")
     fun getTvShows(): DataSource.Factory<Int, TvShow>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)

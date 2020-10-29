@@ -48,6 +48,7 @@ class MovieFragment : Fragment() {
     private fun showDetail(movie: Movie) {
         val intent = Intent(context, DetailMovieActivity::class.java).apply {
             putExtra(DetailMovieActivity.EXTRA_MOVIE, movie)
+            putExtra(DetailMovieActivity.EXTRA_ORIGIN, "movie")
         }
         startActivity(intent)
     }
